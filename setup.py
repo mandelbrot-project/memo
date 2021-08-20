@@ -16,6 +16,7 @@ setup(name='memo',
       install_requires=[
           'ipykernel',
           'pandas',
+          'numpy',
           'jupyter >= 1.0.0',
           'matchms >= 0.9.0',
           'spec2vec >= 0.4',
