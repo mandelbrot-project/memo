@@ -22,7 +22,6 @@ setup(name='memo',
           'spec2vec >= 0.4',
           'plotly >= 4.14.3',
           'cimcb-lite >= 1.0.2',
-          'scikit-learn >= 0.24.1',
-          'scikit-bio >= 0.5.6',
+          'scikit-learn >= 0.24.1'
       ],
       zip_safe=False)
