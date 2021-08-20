@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import scipy as sp
 from skbio.stats.ordination import pcoa
+import cimcb_lite as cb
 import plotly.express as px
 
 def plot_pcoa_2d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2]):
