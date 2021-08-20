@@ -34,5 +34,6 @@ conda activate memo
 pip install memo
 ```
 
-4. Try it using the tutorial jupyter notebook! 
+4. Try it using the tutorial jupyter notebook.
 
+5. Please add feedback to the issues section. Thanks !
