@@ -13,7 +13,7 @@ Samples colored according to their content
 ![plot](./pcoa_tuto_contains.png)
 
 Samples colored according to their method of acquisition
-![plot](./pcoa_tuto_contains.png)
+![plot](./pcoa_tuto_method.png)
 
 
 MEMO is built on matchms and spec2vec packages for handling the MS2 spectra and convert them into documents. Huge thanks to them for the amazing work done with these packages!
