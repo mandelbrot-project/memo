@@ -24,3 +24,6 @@ pip install memo
 ```
 
 4. Try it using the tutorial jupyter notebook! 
+
+![plot](./pcoa_tuto_contains.png)
+
