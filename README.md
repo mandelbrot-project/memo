@@ -54,6 +54,7 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 If you have an error, try using
 ```
 conda install -c conda-forge scikit-bio
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
 ```
 
 You can clone the repository to get the demo spectra and quant table files!
