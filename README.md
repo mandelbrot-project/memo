@@ -39,7 +39,12 @@ pip install .
 ```
 #### B) Using pip
 
-B.1
+B.1. Create a new conda environment to avoid clashes:
+```
+conda create --name memo python
+conda activate memo
+```
+B.2. Install with pip
 ```
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
 ```
