@@ -22,7 +22,7 @@ MEMO is mainly built on [matchms](https://github.com/matchms/matchms) and [spec2
 
 ### To install it:
 
-First make sure to have anaconda3 installed: https://www.anaconda.com/products/individual
+First make sure to have [anaconda](https://www.anaconda.com/products/individual) installed.
 
 #### A) Clone and install locally
 A.1. First clone the repository using git clone in command line:
