@@ -1,6 +1,8 @@
 # memo
 
-## **M**s2 bas**E**d sa**M**ple vect**O**rization (**MEMO**) package
+**M**s2 bas**E**d sa**M**ple vect**O**rization (**MEMO**) package
+
+## Description
 
 MEMO is a method allowing a Retention Time (RT) agnostic alignment of metabolomics samples using the fragmentation spectra (MS2) of their consituents.
 
@@ -10,10 +12,10 @@ MEMO suits particularly well to compare chemodiverse samples, ie with a poor fea
 
 ### Small preview of the results on the Qemistree Evaluation Dataset:
 Samples colored according to their content
-![plot](./pcoa_tuto_contains.png)
+![plot](https://github.com/mandelbrot-project/memo/pcoa_tuto_contains.png)
 
 Samples colored according to their method of acquisition
-![plot](./pcoa_tuto_method.png)
+![plot](https://github.com/mandelbrot-project/memo/pcoa_tuto_method.png)
 
 
 MEMO is built on matchms and spec2vec packages for handling the MS2 spectra and convert them into documents. Huge thanks to them for the amazing work done with these packages! See https://github.com/matchms/matchms for matchms, and https://github.com/iomega/spec2vec for spec2vec. 
