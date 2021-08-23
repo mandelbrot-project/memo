@@ -33,7 +33,7 @@ conda create --name memo python
 conda activate memo
 ```
 
-A.3. Install the package using pip:
+A.3. Install the package locally using pip:
 ```
 pip install .
 ```
@@ -44,10 +44,14 @@ B.1. Create a new conda environment to avoid clashes:
 conda create --name memo python
 conda activate memo
 ```
-B.2. Install with pip
+B.2. Install with pip from test.pypi (experimental)
 ```
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
 ```
+
+You can clone the repository to get the demo spectra and quant table files!
+
+#### Enjoy!
 
 Once installed, try it using the tutorial jupyter notebook.
 
