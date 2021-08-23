@@ -23,26 +23,27 @@ MEMO is built on matchms and spec2vec packages for handling the MS2 spectra and 
 First make sure to have anaconda3 installed: https://www.anaconda.com/products/individual
 
 #### A) Clone and install locally
-1. First clone the repository using git clone in command line:
+A.1. First clone the repository using git clone in command line:
 ```
 git clone <ssh_key or https>
 ```
-2. Create a new conda environment to avoid clashes:
+A.2. Create a new conda environment to avoid clashes:
 ```
 conda create --name memo python
 conda activate memo
 ```
 
-3. Install the package using pip:
+A.3. Install the package using pip:
 ```
 pip install .
 ```
 #### B) Using pip
 
+B.1
 ```
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
 ```
 
-4. Try it using the tutorial jupyter notebook.
+Once installed, try it using the tutorial jupyter notebook.
 
-5. Please add feedback to the issues section. Thanks !
+Please add feedback to the issues section. Thanks !
