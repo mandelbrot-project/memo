@@ -1,4 +1,4 @@
-name = "memo"
+name = "memo_ms"
 
 from memo.load_spectra import load_and_filter_from_mgf
 from memo.load_quant_table import import_mzmine2_quant_table
