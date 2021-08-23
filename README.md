@@ -14,10 +14,10 @@ MEMO suits particularly well to compare chemodiverse samples, ie with a poor fea
 
 The Tutorial uses the [Qemistree Evaluation Dataset](https://www.nature.com/articles/s41589-020-00677-3). This dataset contains samples analyzed on a Q-Exactive using 2 different LC methods simulating a really strong batch effect. Samples originates from 2 fecal samples, 1 tomato sample & 1 plasma sample (+ binary and quaternary mixtures of these 4 samples).
 
-Samples colored according to their content
+#### Samples colored according to their content
 ![plot](./pcoa_tuto_contains.png)
 
-Samples colored according to their method of acquisition
+#### Samples colored according to their LC method
 ![plot](./pcoa_tuto_method.png)
 
 
