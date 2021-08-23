@@ -28,7 +28,7 @@ git clone <ssh_key or https>
 ```
 2. Create a new conda environment to avoid clashes:
 ```
-conda create --name memo python scikit-bio
+conda create --name memo python
 conda activate memo
 ```
 
