@@ -31,7 +31,7 @@ conda activate memo
 
 3. Install the package using pip:
 ```
-pip install memo
+pip install .
 ```
 
 4. Try it using the tutorial jupyter notebook.
