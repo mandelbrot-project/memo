@@ -51,6 +51,11 @@ B.2. Install with pip from test.pypi (experimental)
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
 ```
 
+If you have an error, try using
+```
+conda install -c conda-forge scikit-bio
+```
+
 You can clone the repository to get the demo spectra and quant table files!
 
 #### Enjoy!
