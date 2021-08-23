@@ -16,12 +16,15 @@ Samples colored according to their method of acquisition
 ![plot](./pcoa_tuto_method.png)
 
 
-MEMO is built on matchms and spec2vec packages for handling the MS2 spectra and convert them into documents. Huge thanks to them for the amazing work done with these packages!
+MEMO is built on matchms and spec2vec packages for handling the MS2 spectra and convert them into documents. Huge thanks to them for the amazing work done with these packages! See https://github.com/matchms/matchms for matchms, and https://github.com/iomega/spec2vec for spec2vec. 
 
 ### To install it:
+
+First make sure to have anaconda3 installed: https://www.anaconda.com/products/individual
+
 1. First clone the repository using git clone in command line:
 ```
-git clone
+git clone <ssh_key or https>
 ```
 2. Create a new conda environment to avoid clashes:
 ```
