@@ -8,9 +8,12 @@ MEMO is a method allowing a Retention Time (RT) agnostic alignment of metabolomi
 
 The occurence of MS2 Peaks and Neutral Losses in each sample is counted and used to generate an *MS2 fingerprint* of the sample. These fingerprints can in a second stage be aligned to compare different samples. Once obtained, different filtering (remove peaks/losses from blanks for example) and visualization techniques (MDS/PCoA, TMAP, Heatmap, ...) can be used. 
 
-MEMO suits particularly well to compare chemodiverse samples, ie with a poor features overlap, or to compare samples with a strong RT shift, acquired using different LC methods or even different mass spectrometers technology (qToF vs QE).
+MEMO suits particularly well to compare chemodiverse samples, ie with a poor features overlap, or to compare samples with a strong RT shift, acquired using different LC methods or even different mass spectrometers technology (Maxiis qToF vs Q-Exactive).
 
 ### Small preview of the results on the Qemistree Evaluation Dataset:
+
+The Tutorial uses the [Qemistree Evaluation Dataset](https://www.nature.com/articles/s41589-020-00677-3). This dataset contains samples analyzed on a Q-Exactive using 2 different LC methods simulating a really strong batch effect. Samples originates from 2 fecal samples, 1 tomato sample & 1 plasma sample (+ binary and quaternary mixtures of these 4 samples).
+
 Samples colored according to their content
 ![plot](./pcoa_tuto_contains.png)
 
