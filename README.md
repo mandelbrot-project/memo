@@ -46,12 +46,12 @@ B.1. Create a new conda environment to avoid clashes:
 conda create --name memo python
 conda activate memo
 ```
-B.2. Install with pip from test.pypi (experimental)
+B.2. Install with pip from test.pypi (experimental):
 ```
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
 ```
 
-If you have an error, try using
+If you have an error, try instllaing scikit-bio from conda-forge before installing the package with pip:
 ```
 conda install -c conda-forge scikit-bio
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
