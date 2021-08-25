@@ -7,3 +7,5 @@ from memo_ms.memo import generate_memo
 from memo_ms.memo import filter_memo
 from memo_ms.visualization import plot_pcoa_2d
 from memo_ms.visualization import plot_pcoa_3d
+from memo_ms.visualization import plot_heatmap
+from memo_ms.visualization import plot_hca
