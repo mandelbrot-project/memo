@@ -20,6 +20,13 @@ The Tutorial uses the [Qemistree Evaluation Dataset](https://www.nature.com/arti
 #### Samples colored according to their LC method
 ![plot](./pcoa_tuto_method.png)
 
+#### Samples clustered using HCA
+![plot](./hca.png)
+
+#### Samples clustered using HCA and Heatmap visualization
+![plot](./heatmap.png)
+
+
 
 MEMO is mainly built on [matchms](https://github.com/matchms/matchms) and [spec2vec](https://github.com/iomega/spec2vec) packages for handling the MS2 spectra and convert them into documents. Huge thanks to them for the amazing work done with these packages!
 
