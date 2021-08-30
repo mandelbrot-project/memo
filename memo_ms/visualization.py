@@ -10,35 +10,35 @@ import plotly.figure_factory as ff
 from matplotlib import pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
 
-def plot_pcoa_2d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2]):
-    '''
-    Compute distance matrix and perform PCoA on it from a given MEMO matrix
-    Output 2D score plot, distance matrix and skbio.pcoa 
+def plot_pcoa_2d(
+    matrix, df_metadata, filename_col, group_col,
+    metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2]
+    ):
+    """ Simple 2D PCoA plot of a MEMO matrix using Plotly
 
-    plot_pcoa_2d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2])
     Args:
-        memo_matrix
-        df_metadata
-        filename_col
-        color
-        metric
-        norm
-        scaling
-        pc_to_plot
-    '''
+        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        df_metadata (DataFrame): Metadata of the MEMO matrix samples
+        filename_col (str): Column name in df_metadata to match memo_matrix index
+        group_col (str): Column name in df_metadata to use as groups for plotting
+        metric (str, optional): Distance metric to use, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html. Defaults to 'braycurtis'.
+        norm (bool, optional): Apply samples normalization. Defaults to False.
+        scaling (bool, optional): Apply pareto scaling to MEMO matrix columns. Defaults to False.
+        pc_to_plot (list of int, optional): PCs to plot. Defaults to [1,2].
 
-    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(memo_matrix.index))]
-    memo_matrix = memo_matrix[memo_matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    Returns:
+        None
+    """
+    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
     if norm == True:
-        memo_matrix = memo_matrix.div(memo_matrix.sum(axis=1), axis=0)
+        matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
-        memo_matrix = memo_matrix.to_numpy()
-        memo_matrix = np.where(memo_matrix== 0, 0.1, memo_matrix)         
-        memo_matrix = np.log10(memo_matrix) # Log scale (base-10)
-        memo_matrix = np.where(memo_matrix== -1, 0, memo_matrix)         
-        memo_matrix = cb.utils.scale(memo_matrix, method='pareto')
+        matrix = matrix.to_numpy()
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)   
+        matrix = cb.utils.scale(matrix, method='pareto')
 
-    dm_memo = sp.spatial.distance.pdist(memo_matrix, metric)
+    dm_memo = sp.spatial.distance.pdist(matrix, metric)
     pcoa_results = pcoa(dm_memo)
 
     x = pcoa_results.samples[f'PC{pc_to_plot[0]}']
@@ -48,53 +48,49 @@ def plot_pcoa_2d(memo_matrix, df_metadata, filename_col, color, metric = 'braycu
     exp_var_pc1 = round(100*pcoa_results.proportion_explained[pc_to_plot[0] - 1 ], 1)
     exp_var_pc2 = round(100*pcoa_results.proportion_explained[pc_to_plot[1] - 1 ], 1)
 
-    fig = px.scatter(x=x, y=y, color=df_metadata_resticted[color],
+    fig = px.scatter(x=x, y=y, color=df_metadata_resticted[group_col],
     labels={'x': f"PC{pc_to_plot[0]} ({exp_var_pc1} %)",
             'y': f"PC{pc_to_plot[1]} ({exp_var_pc2} %)",
-            'color': color
+            'color': group_col
             },
-    title="PCoA",
+    title="2D PCoA",
     hover_name=df_metadata_resticted[filename_col],
     template="simple_white"
     )
     fig.update_layout({'width':1000, 'height':650})
     fig.show()
-
-    result = {}
-    result['fig'] = fig
-    result['dm'] = dm_memo
-    result['pcoa'] = pcoa_results
-    return result
+    return None
 
 
-def plot_pcoa_3d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3]):
-    '''
-    Compute distance matrix and perform PCoA on it from a given MEMO matrix
-    Output 3D score plot, distance matrix and skbio.pcoa 
+def plot_pcoa_3d(
+    matrix, df_metadata, filename_col, group_col,
+    metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3]
+    ):
+    """ Simple 2D PCoA plot of a MEMO matrix using Plotly
 
-    plot_pcoa_3d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3])
     Args:
-        memo_matrix
-        df_metadata
-        filename_col
-        color
-        metric
-        norm
-        scaling
-        pc_to_plot
-    ''' 
-    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(memo_matrix.index))]
-    memo_matrix = memo_matrix[memo_matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
-    if norm == True:
-        memo_matrix = memo_matrix.div(memo_matrix.sum(axis=1), axis=0)
-    if scaling == True:
-        memo_matrix = memo_matrix.to_numpy()
-        memo_matrix = np.where(memo_matrix== 0, 0.1, memo_matrix)         
-        memo_matrix = np.log10(memo_matrix) # Log scale (base-10)
-        memo_matrix = np.where(memo_matrix== -1, 0, memo_matrix)         
-        memo_matrix = cb.utils.scale(memo_matrix, method='pareto')
+        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        df_metadata (DataFrame): Metadata of the MEMO matrix samples
+        filename_col (str): Column name in df_metadata to match memo_matrix index
+        group_col (str): Column name in df_metadata to use as groups for plotting
+        metric (str, optional): Distance metric to use, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html. Defaults to 'braycurtis'.
+        norm (bool, optional): Apply samples normalization. Defaults to False.
+        scaling (bool, optional): Apply pareto scaling to MEMO matrix columns. Defaults to False.
+        pc_to_plot (list of int, optional): PCs to plot. Defaults to [1,2,3].
 
-    dm_memo = sp.spatial.distance.pdist(memo_matrix, metric)
+    Returns:
+        None
+    """
+    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    if norm == True:
+        matrix = matrix.div(matrix.sum(axis=1), axis=0)
+    if scaling == True:
+        matrix = matrix.to_numpy()
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)       
+        matrix = cb.utils.scale(matrix, method='pareto')
+
+    dm_memo = sp.spatial.distance.pdist(matrix, metric)
     pcoa_results = pcoa(dm_memo)
 
     x = pcoa_results.samples[f'PC{pc_to_plot[0]}']
@@ -105,66 +101,64 @@ def plot_pcoa_3d(memo_matrix, df_metadata, filename_col, color, metric = 'braycu
     exp_var_pc2 = round(100*pcoa_results.proportion_explained[pc_to_plot[1] - 1 ], 1)
     exp_var_pc3 = round(100*pcoa_results.proportion_explained[pc_to_plot[2] - 1 ], 1)
 
-    fig = px.scatter_3d(x=x, y=y, z=z, color=df_metadata_resticted[color],
+    fig = px.scatter_3d(x=x, y=y, z=z, color=df_metadata_resticted[group_col],
     labels={'x': f"PC{pc_to_plot[0]} ({exp_var_pc1} %)",
             'y': f"PC{pc_to_plot[1]} ({exp_var_pc2} %)",
             'z': f"PC{pc_to_plot[2]} ({exp_var_pc3} %)",
-            'color': color
+            'color': group_col
             },
-    title="PCoA",
+    title="3D PCoA",
     hover_name=df_metadata_resticted[filename_col],
     template="simple_white"
     )
     fig.update_layout({'width':1000, 'height':650})
     fig.show()
-
-    result = {}
-    result['fig'] = fig
-    result['dm'] = dm_memo
-    result['pcoa'] = pcoa_results
-    return result
-
+    return None
 
 def plot_hca(
-    memo_matrix, df_metadata, filename_col, label_col, plotly_discrete_cm = px.colors.qualitative.Plotly,
+    matrix, df_metadata, filename_col, group_col,
+    plotly_discrete_cm = px.colors.qualitative.Plotly,
     linkage_method = 'ward', linkage_metric = 'euclidean',
     norm = False, scaling = False):
-    '''
-    Compute distance matrix and perform PCoA on it from a given MEMO matrix
-    Output 3D score plot, distance matrix and skbio.pcoa 
+    """Simple HCA plot of a MEMO matrix using matplotlib
 
-    plot_pcoa_3d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3])
     Args:
-        memo_matrix
-        df_metadata
-        filename_col
-        label_col
-        plotly_discrete_cm
-        metric
-        norm
-        scaling
-    ''' 
-    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(memo_matrix.index))]
-    memo_matrix = memo_matrix[memo_matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
-    if norm == True:
-        memo_matrix = memo_matrix.div(memo_matrix.sum(axis=1), axis=0)
-    if scaling == True:
-        memo_matrix = memo_matrix.to_numpy()
-        memo_matrix = np.where(memo_matrix== 0, 0.1, memo_matrix)         
-        memo_matrix = np.log10(memo_matrix) # Log scale (base-10)
-        memo_matrix = np.where(memo_matrix== -1, 0, memo_matrix)         
-        memo_matrix = cb.utils.scale(memo_matrix, method='pareto')
+        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        df_metadata (DataFrame): Metadata of the MEMO matrix samples
+        filename_col (str): Column name in df_metadata to match memo_matrix index
+        group_col (str): Column name in df_metadata to use as groups for plotting
+        plotly_discrete_cm ([type], optional): Plotly discrete colormap to use for groups. Defaults to px.colors.qualitative.Plotly.
+        linkage_method (str, optional): Linkage method to use. Defaults to 'ward'.
+        linkage_metric (str, optional): Linkage metric to use. Defaults to 'euclidean'.
+        norm (bool, optional): Apply samples normalization. Defaults to False.
+        scaling (bool, optional): Apply pareto scaling to MEMO matrix columns. Defaults to False.
 
-    groups = df_metadata_resticted[label_col].unique()
+    Returns:
+        None
+    """
+
+    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    if norm == True:
+        matrix = matrix.div(matrix.sum(axis=1), axis=0)
+    if scaling == True:
+        matrix = matrix.to_numpy()
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
+        # matrix = np.where(matrix== 0, 0.1, matrix)         
+        # matrix = np.log10(matrix) # Log scale (base-10)
+        # matrix = np.where(matrix== -1, 0, matrix)         
+        matrix = cb.utils.scale(matrix, method='pareto')
+
+    groups = df_metadata_resticted[group_col].unique()
     colors_list = plotly_discrete_cm
     dic_col = dict(zip(groups, cycle(colors_list)))
 
-    Z = linkage(memo_matrix, method=linkage_method, metric=linkage_metric)
+    Z = linkage(matrix, method=linkage_method, metric=linkage_metric)
     
     fig = plt.figure(figsize=(12, 8), dpi=80)
 
     dendrogram(
-        Z, labels =df_metadata_resticted[label_col].to_list(),
+        Z, labels =df_metadata_resticted[group_col].to_list(),
         leaf_rotation=0, 
         orientation='left'
         )
@@ -173,47 +167,49 @@ def plot_hca(
         lbl.set_color(dic_col[lbl.get_text()])
 
     plt.show()
+    return None
 
 def plot_heatmap(
-    memo_matrix, df_metadata, filename_col, label_col, plotly_discrete_cm = px.colors.qualitative.Plotly,
+    matrix, df_metadata, filename_col, group_col,
+    plotly_discrete_cm = px.colors.qualitative.Plotly,
     linkage_method = 'ward', linkage_metric = 'euclidean',
     heatmap_metric = 'braycurtis', norm = False, scaling = False):
-    '''
-    Compute distance matrix and perform PCoA on it from a given MEMO matrix
-    Output 3D score plot, distance matrix and skbio.pcoa 
+    """HCA and heatmap plot of a MEMO matrix using Plotly
 
-    plot_pcoa_3d(memo_matrix, df_metadata, filename_col, color, metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3])
     Args:
-        memo_matrix
-        df_metadata
-        filename_col
-        label_col
-        plotly_discrete_cm
-        metric
-        norm
-        scaling
-    ''' 
-    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(memo_matrix.index))]
-    memo_matrix = memo_matrix[memo_matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        df_metadata (DataFrame): Metadata of the MEMO matrix samples
+        filename_col (str): Column name in df_metadata to match memo_matrix index
+        group_col (str): Column name in df_metadata to use as groups for plotting
+        plotly_discrete_cm ([type], optional): Plotly discrete colormap to use for groups. Defaults to px.colors.qualitative.Plotly.
+        linkage_method (str, optional): Linkage method to use. Defaults to 'ward'.
+        linkage_metric (str, optional): Linkage metric to use. Defaults to 'euclidean'.
+        heatmap_metric (str, optional): Distance metric to use for heatmap. Defaults to 'braycurtis'.
+        norm (bool, optional): Apply samples normalization. Defaults to False.
+        scaling (bool, optional): Apply pareto scaling to MEMO matrix columns. Defaults to False.
+
+    Returns:
+        None
+    """
+    df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
     if norm == True:
-        memo_matrix = memo_matrix.div(memo_matrix.sum(axis=1), axis=0)
+        matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
-        memo_matrix = memo_matrix.to_numpy()
-        memo_matrix = np.where(memo_matrix== 0, 0.1, memo_matrix)         
-        memo_matrix = np.log10(memo_matrix) # Log scale (base-10)
-        memo_matrix = np.where(memo_matrix== -1, 0, memo_matrix)         
-        memo_matrix = cb.utils.scale(memo_matrix, method='pareto')
+        matrix = matrix.to_numpy()
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
+        matrix = cb.utils.scale(matrix, method='pareto')
 
-    dm_memo = sp.spatial.distance.pdist(memo_matrix, heatmap_metric)
+    dm_memo = sp.spatial.distance.pdist(matrix, heatmap_metric)
 
-    fig = ff.create_dendrogram(memo_matrix, orientation='bottom', labels= df_metadata_resticted[label_col].to_list(), 
+    fig = ff.create_dendrogram(matrix, orientation='bottom', labels= df_metadata_resticted[group_col].to_list(), 
     linkagefun=lambda x: linkage(x, method=linkage_method, metric = linkage_metric)
     )
     for i in range(len(fig['data'])):
         fig['data'][i]['yaxis'] = 'y2'
 
     # Create Side Dendrogram
-    dendro_side = ff.create_dendrogram(memo_matrix, orientation='right',
+    dendro_side = ff.create_dendrogram(matrix, orientation='right',
     linkagefun=lambda x: linkage(x, method=linkage_method, metric = linkage_metric), 
     )
     for i in range(len(dendro_side['data'])):
@@ -261,13 +257,13 @@ def plot_heatmap(
     df_meta_reindex = df_meta_reindex.reindex(dendro_leaves)
     df_meta_reindex['x'] = heatmap[0]['x']
     df_meta_reindex['y'] = 1
-    groups = df_metadata_resticted[label_col].unique()
+    groups = df_metadata_resticted[group_col].unique()
     colors_list = plotly_discrete_cm
     dic_col = dict(zip(groups, cycle(colors_list)))
     scats = []
     i_color = 0
     for group in groups:
-        scat_group = df_meta_reindex[df_meta_reindex[label_col] == group]
+        scat_group = df_meta_reindex[df_meta_reindex[group_col] == group]
         scat_group = go.Scatter(
             x=scat_group['x'], y=scat_group['y'],
             name=group, marker_color = dic_col[group],
@@ -316,7 +312,7 @@ def plot_heatmap(
                                     'zeroline': False,
                                     'showticklabels': False,
                                     'ticks':""})
-
+    # Edit yaxis3
     fig.update_layout(yaxis3={'domain':[0.84, 0.90],
                                     'mirror': False,
                                     'showgrid': False,
@@ -339,8 +335,4 @@ def plot_heatmap(
 
     fig.update_xaxes(tickangle=45)
     fig.show()
-    
-    result = {}
-    result['fig'] = fig
-    
-    return result
+    return None
