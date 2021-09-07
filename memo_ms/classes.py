@@ -71,30 +71,6 @@ class MemoContainer:
             self.memo_matrix = self._generate_memo(featuretable, spectradocuments)
             self.feature_matrix = featuretable.quant_table
 
-    # def _generate_memo(self, featuretable, spectradocuments) -> pd.DataFrame:
-    #     """
-    #     Use a doc_with_meta table and a quant_table to generate a MEMO matrix.
-    #     Returns a pd.DataFrame MEMO matrix.
-    #     """
-    #     quant_table = featuretable.quant_table.copy()
-    #     samples_col = list(quant_table.index)
-    #     document = spectradocuments.document[['scans', 'documents']].copy()
-    #     quant_table = quant_table.transpose()
-    #     quant_table[quant_table == 0] = np.nan
-    #     merged_table = pd.merge(document, quant_table, left_on = "scans", right_index=True, how="inner") 
-    #     fingerprints = []
-    #     for col in samples_col:
-    #         merged_table[col] = np.where(~merged_table[col].isna(), merged_table['documents'], merged_table[col])
-    #         col_list = merged_table[col].dropna().tolist()
-    #         fingerprint = [item for sublist in col_list for item in sublist]
-    #         cnt = Counter(fingerprint)
-    #         fingerprints.append(cnt)
-    #     memo_matrix = pd.DataFrame(fingerprints)
-    #     memo_matrix.index = samples_col
-    #     memo_matrix.fillna(0, inplace=True)
-    #     memo_matrix.index.name = 'filename'
-    #     return memo_matrix
-
     def _generate_memo(self, featuretable, spectradocuments) -> pd.DataFrame:
         """
         Use a doc_with_meta table and a quant_table to generate a MEMO matrix.
