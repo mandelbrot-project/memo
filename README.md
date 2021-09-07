@@ -49,7 +49,7 @@ A.3. Install the package locally using pip:
 ```
 pip install .
 ```
-#### B) Using pip
+#### B) Using test.pypi (Not recommended for now!)
 
 B.1. Create a new conda environment to avoid clashes:
 ```
