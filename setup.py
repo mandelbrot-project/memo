@@ -5,7 +5,7 @@ def readme():
         return f.read()
 
 setup(name='memo_ms',
-      version='0.0.3',
+      version='0.0.4',
       description='Python package to perform MS2 Based Sample Vectorization and visualization',
       long_description=readme(),
       url='https://github.com/mandelbrot-project/memo',

@@ -30,7 +30,7 @@ def plot_pcoa_2d(
         None
     """
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
-    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm == True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
@@ -82,7 +82,7 @@ def plot_pcoa_3d(
         None
     """
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
-    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm == True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
@@ -138,15 +138,12 @@ def plot_hca(
     """
 
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
-    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm == True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
         matrix = matrix.to_numpy()
-        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
-        # matrix = np.where(matrix== 0, 0.1, matrix)         
-        # matrix = np.log10(matrix) # Log scale (base-10)
-        # matrix = np.where(matrix== -1, 0, matrix)         
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)       
         matrix = cb.utils.scale(matrix, method='pareto')
 
     groups = df_metadata_resticted[group_col].unique()
@@ -192,7 +189,7 @@ def plot_heatmap(
         None
     """
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
-    matrix = matrix[matrix.index.isin(list(df_metadata_resticted.Filename))].reindex(list(df_metadata_resticted.Filename))
+    matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm == True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
