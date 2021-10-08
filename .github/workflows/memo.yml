@@ -18,7 +18,7 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          $CONDA/bin/conda env create --name memo
+          $CONDA/bin/conda create -n memo python=3.8
           $CONDA/bin/conda activate memo
           pip install .
       - name: Run tests
