@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           conda create -n memo python=3.8
-          conda run -n memo install scikit-bio>=0.5.6
+          conda run -n memo install -c conda-forge scikit-bio
           pip install .
       - name: Run tests
         run: |
