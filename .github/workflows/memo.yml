@@ -19,6 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           $CONDA/bin/conda create -n memo python=3.8
+          $CONDA/bin/conda run -n memo install -c conda-forge scikit-bio
           $CONDA/bin/conda run -n memo pip install .
       - name: Run tests
         run: |
