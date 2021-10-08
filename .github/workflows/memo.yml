@@ -18,8 +18,7 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          conda create -n memo python=3.8
-          conda run -n memo install -c conda-forge scikit-bio
+          conda install -c conda-forge scikit-bio
           pip install .
       - name: Run tests
         run: |
