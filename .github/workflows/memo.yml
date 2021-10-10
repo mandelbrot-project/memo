@@ -24,7 +24,7 @@ jobs:
       - name: Manual fix of papermill dependencies
         run: |
           # see https://github.com/nteract/papermill/issues/289
-          pip install nbconvert >= 5.4
+          pip install nbconvert>=5.4.0
       - name: Run Notebook
         uses: yaananth/run-notebook@v1
         env:
