@@ -21,9 +21,6 @@ jobs:
           conda install -c conda-forge scikit-bio
           python -mpip install numpy
           pip install .
-      - name: Install papermill for CI
-        run: |
-          python3 -m pip install papermill
       - name: Run Notebook
         uses: yaananth/run-notebook@v1
         env:
@@ -32,7 +29,7 @@ jobs:
           GITHUB: ${{ toJson(github) }}
         with:
           notebook: "tutorial_memo.ipynb"
-          params: "parameters.json"
+          # params: "parameters.json"
           isReport: False
       - name: Run tests
         run: |
