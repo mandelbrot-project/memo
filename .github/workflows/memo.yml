@@ -26,6 +26,10 @@ jobs:
           python3 -m pip install papermill
       - name: Run Notebook
         uses: yaananth/run-notebook@v1
+        env:
+          RUNNER: ${{ toJson(runner) }}
+          SECRETS: ${{ toJson(secrets) }}
+          GITHUB: ${{ toJson(github) }}
         with:
           notebook: "tutorial_memo.ipynb"
           params: "parameters.json"
