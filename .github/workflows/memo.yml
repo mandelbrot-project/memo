@@ -27,7 +27,6 @@ jobs:
           notebook: "tutorial_memo.ipynb"
           # params: "PATHTOPARAMS.json"
           isReport: False
-          poll: True
       - name: Run tests
         run: |
           bash tests/integration_test.sh
