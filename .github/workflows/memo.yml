@@ -21,7 +21,10 @@ jobs:
           conda install -c conda-forge scikit-bio
           python -mpip install numpy
           pip install .
-      - name: run-notebook
+      - name: Install papermill for CI
+        run: |
+          python3 -m pip install papermill
+      - name: Run Notebook
         uses: yaananth/run-notebook@v1
         with:
           notebook: "tutorial_memo.ipynb"
