@@ -21,20 +21,10 @@ jobs:
           conda install -c conda-forge scikit-bio
           python -mpip install numpy
           pip install .
-      - name: Manual fix of papermill dependencies
+          pip install papermill ipykernel
+      - name: Execute Notebook
         run: |
-          # see https://github.com/nteract/papermill/issues/289
-          pip install nbconvert>=5.5.0
-      - name: Run Notebook
-        uses: yaananth/run-notebook@v1
-        env:
-          RUNNER: ${{ toJson(runner) }}
-          SECRETS: ${{ toJson(secrets) }}
-          GITHUB: ${{ toJson(github) }}
-        with:
-          notebook: "tutorial_memo.ipynb"
-          params: "parameters.json"
-          isReport: False
+          papermill tutorial_memo.ipynb tutorial_memo.ipynb
       - name: Run tests
         run: |
           bash tests/integration_test.sh
