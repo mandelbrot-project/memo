@@ -21,6 +21,13 @@ jobs:
           conda install -c conda-forge scikit-bio
           python -mpip install numpy
           pip install .
+      - name: run-notebook
+        uses: yaananth/run-notebook@v1
+        with:
+          notebook: "tutorial_memo.ipynb"
+          # params: "PATHTOPARAMS.json"
+          isReport: False
+          poll: True
       - name: Run tests
         run: |
           bash tests/integration_test.sh
