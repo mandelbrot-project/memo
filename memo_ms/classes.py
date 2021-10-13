@@ -167,11 +167,11 @@ class MemoContainer:
         """
         if matrix_to_use == 'memo_matrix':
             table = self.memo_matrix.copy()
-        if matrix_to_use == 'filtered_memo_matrix':
+        elif matrix_to_use == 'filtered_memo_matrix':
             table = self.filtered_memo_matrix.copy()
         elif matrix_to_use == 'feature_matrix':
             table = self.feature_matrix.copy()
-        if matrix_to_use == 'filtered_feature_matrix':
+        elif matrix_to_use == 'filtered_feature_matrix':
             table = self.filtered_feature_matrix.copy()
         else:
             raise ValueError('Invalid matrix_to_use value: choose one of [memo_matrix, feature_matrix, filtered_memo_matrix, filtered_feature_matrix]')
