@@ -41,7 +41,7 @@ git clone <ssh_key or https>
 ```
 A.2. Create a new conda environment to avoid clashes:
 ```
-conda create --name memo python
+conda create --name memo pythons
 conda activate memo
 ```
 
@@ -53,7 +53,7 @@ pip install .
 
 B.1. Create a new conda environment to avoid clashes:
 ```
-conda create --name memo python
+conda create --name memo python=3.8
 conda activate memo
 ```
 B.2. Install with pip from test.pypi (experimental):

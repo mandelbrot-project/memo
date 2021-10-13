@@ -2,6 +2,7 @@ import pandas as pd
 from matchms.importing import load_from_mgf
 from matchms.filtering import add_precursor_mz
 from matchms.filtering import add_losses
+from matchms.filtering import add_precursor_mz
 from matchms.filtering import normalize_intensities
 from matchms.filtering import require_minimum_number_of_peaks
 from matchms.filtering import select_by_relative_intensity
@@ -16,6 +17,7 @@ def load_and_filter_from_mgf(path, min_relative_intensity, max_relative_intensit
         spectrum = add_precursor_mz(spectrum)
         spectrum = normalize_intensities(spectrum)
         spectrum = select_by_relative_intensity(spectrum, intensity_from = min_relative_intensity, intensity_to = max_relative_intensity)
+        spectrum = add_precursor_mz(spectrum)
         spectrum = add_losses(spectrum, loss_mz_from= loss_mz_from, loss_mz_to= loss_mz_to)
         spectrum = require_minimum_number_of_peaks(spectrum, n_required= n_required)
         return spectrum
