@@ -1,0 +1,6 @@
+GDoc with links to the jobs: https://docs.google.com/document/d/1SUHNCdF3btS4vx9AmJdJ0LtDO_V6Gs_1T2OfZ1Kpom8/edit
+
+qe_nogapF: https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=69017e0aa5504a18ad84ebe1f6005efe
+qe_gapF: https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=73d19fa6092447cd80a5c1e2cf8bc06c
+qtof_nogapF: https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=ef28e0f32e2745ee8ff95545f8e8a994
+qtof_gapF: https://gnps.ucsd.edu/ProteoSAFe/status.jsp?task=70a6994546d442efa4660772e1cca5e9
