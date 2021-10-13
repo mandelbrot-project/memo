@@ -163,14 +163,18 @@ class MemoContainer:
             max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
 
         Returns:
-            self.filtered_memo_matrix OR  self.filtered_feature_matrix (DataFrame): A filtered matrix
+            self.filtered_memo_matrix OR self.filtered_feature_matrix (DataFrame): A filtered matrix
         """
         if matrix_to_use == 'memo_matrix':
             table = self.memo_matrix.copy()
+        if matrix_to_use == 'filtered_memo_matrix':
+            table = self.filtered_memo_matrix.copy()
         elif matrix_to_use == 'feature_matrix':
             table = self.feature_matrix.copy()
+        if matrix_to_use == 'filtered_feature_matrix':
+            table = self.filtered_feature_matrix.copy()
         else:
-            raise ValueError('Invalid matrix_to_use value: choose one of [memo_matrix, feature_matrix]')
+            raise ValueError('Invalid matrix_to_use value: choose one of [memo_matrix, feature_matrix, filtered_memo_matrix, filtered_feature_matrix]')
 
         table_blanks = table[table.index.str.contains(samples_pattern, case = False)]
         blank_samples = list(table_blanks.index)
@@ -185,7 +189,11 @@ class MemoContainer:
 
         if matrix_to_use == 'memo_matrix':
             self.filtered_memo_matrix = table_filtered
+        elif matrix_to_use == 'filtered_memo_matrix':
+            self.filtered_memo_matrix = table_filtered
         elif matrix_to_use == 'feature_matrix':
+            self.filtered_feature_matrix = table_filtered
+        elif matrix_to_use == 'filtered_feature_matrix':
             self.filtered_feature_matrix = table_filtered
         return None
 
