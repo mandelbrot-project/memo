@@ -29,5 +29,10 @@ setup(name='memo_ms',
           'scikit-learn >= 0.24.1',
           'scikit-bio >= 0.5.6'
       ],
+      extras_require={"dev": ["isort>=4.2.5,<5",
+                            "prospector[with_pyroma]",
+                            "pytest",
+                            "pytest-cov",],
+                     }
       python_requires=">=3.8",
       zip_safe=False)
