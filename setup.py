@@ -27,7 +27,7 @@ setup(name='memo_ms',
           'plotly >= 4.14.3',
           'cimcb-lite >= 1.0.2',
           'scikit-learn >= 0.24.1',
-          'scikit-bio >= 0.5.6'
+          'scikit-bio >= 0.5.4'
       ],
       extras_require={"dev": ["isort>=4.2.5,<5",
                             "prospector[with_pyroma]",
