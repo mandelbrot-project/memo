@@ -17,6 +17,7 @@ setup(name='memo_ms',
         'Operating System :: OS Independent'
       ],
       packages=['memo_ms'],
+      python_requires=">=3.8",
       install_requires=[
           'ipykernel',
           'pandas',
@@ -33,6 +34,5 @@ setup(name='memo_ms',
                             "prospector[with_pyroma]",
                             "pytest",
                             "pytest-cov",],
-                     }
-      python_requires=">=3.8",
+                     },
       zip_safe=False)
