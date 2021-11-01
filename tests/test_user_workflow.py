@@ -4,13 +4,14 @@ TODO: Make meaningfull, clear workflow out of it.
 """
 import memo_ms as memo
 import numpy as np
+import os
 import pandas as pd
 from pathlib import Path
 import plotly.express as px
 import pytest
 
 
-TEST_RESOURCES_PATH = Path(__file__).parent[1] / 'data'
+TEST_RESOURCES_PATH = os.path.dirname(Path(__file__).parent) / 'data'
 
 @pytest.mark.integtest
 def test_workflow():
