@@ -41,7 +41,7 @@ git clone <ssh_key or https>
 ```
 A.2. Create a new conda environment to avoid clashes:
 ```
-conda create --name memo pythons
+conda create --name memo python
 conda activate memo
 ```
 
