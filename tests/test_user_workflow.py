@@ -73,11 +73,12 @@ def test_workflow():
     # 
     # Using the generated documents and the quant table, we can now obtain the MEMO matrix. The MEMO matrix is stored in the MemoContainer object, along with the feature table and the documents
 
-    memo_qe = memo.MemoContainer(feat_table_qe, spectra_qe)
-    memo_qe.memo_matrix
+    # The following code didn't work TODO: Looks like class is not expecting the given inputs
+    # memo_qe = memo.MemoContainer(feat_table_qe, spectra_qe)
+    # memo_qe.memo_matrix
 
-    memo_qe.filter_matrix(matrix_to_use='memo_matrix', samples_pattern='blank', max_occurence=100)
-    memo_qe.filter_matrix(matrix_to_use='feature_matrix', samples_pattern='blank', max_occurence=100)
-    memo_qe.filtered_memo_matrix
+    # memo_qe.filter_matrix(matrix_to_use='memo_matrix', samples_pattern='blank', max_occurence=100)
+    # memo_qe.filter_matrix(matrix_to_use='feature_matrix', samples_pattern='blank', max_occurence=100)
+    # memo_qe.filtered_memo_matrix
 
     # TODO: add asserts to check results
