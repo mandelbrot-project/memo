@@ -10,7 +10,7 @@ import plotly.express as px
 import pytest
 
 
-TEST_RESOURCES_PATH = Path(__file__).parent / 'data'
+TEST_RESOURCES_PATH = Path(__file__).parent[1] / 'data'
 
 @pytest.mark.integtest
 def test_workflow():
