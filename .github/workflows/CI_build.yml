@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          conda install -c conda-forge numpy
-          conda install -c conda-forge scikit-bio
           pip install -e .[dev]
       - name: Show pip list
         run: |
@@ -59,7 +57,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          conda install -c conda-forge scikit-bio
           pip install -e .[dev]
       - name: Show pip list
         run: |
