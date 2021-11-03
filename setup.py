@@ -17,6 +17,7 @@ setup(name='memo_ms',
         'Operating System :: OS Independent'
       ],
       packages=['memo_ms'],
+      python_requires=">=3.8",
       install_requires=[
           'ipykernel',
           'pandas',
@@ -26,8 +27,12 @@ setup(name='memo_ms',
           'spec2vec >= 0.4',
           'plotly >= 4.14.3',
           'cimcb-lite >= 1.0.2',
-          'scikit-learn >= 0.24.1',
-          'scikit-bio >= 0.5.6'
+          'scikit-bio >= 0.5.6', 
+          'scikit-learn >= 0.24.1'
       ],
-      python_requires=">=3.8",
+      extras_require={"dev": ["isort>=4.2.5,<5",
+                            "prospector[with_pyroma]",
+                            "pytest",
+                            "pytest-cov",],
+                     },
       zip_safe=False)
