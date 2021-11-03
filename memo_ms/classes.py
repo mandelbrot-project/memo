@@ -197,11 +197,11 @@ class MemoContainer:
             self.filtered_feature_matrix = table_filtered
         return None
 
-    def merge_memo(self, MemoContainer2, left, right, drop_not_in_common=False):
+    def merge_memo(self, memocontainer2, left, right, drop_not_in_common=False):
         """Merge 2 MEMO matrix
 
         Args:
-            MemoContainer2 (MemoContainer): MemoContainer dataclass object containing the 2nd MEMO matrix to merge
+            memocontainer2 (MemoContainer): MemoContainer dataclass object containing the 2nd MEMO matrix to merge
             left (str): The left MEMO matrix to merge: memo_matrix OR filtered_memo_matrix
             right (str): The right MEMO matrix to merge: memo_matrix OR filtered_memo_matrix
             drop_not_in_common (bool): Drop peaks/losses not in common
@@ -210,7 +210,7 @@ class MemoContainer:
         """
         output = MemoContainer()
 
-        if type(MemoContainer2) != MemoContainer:
+        if type(memocontainer2) != MemoContainer:
             raise TypeError ("merge_memo() MemoContainer argument must be a MemoContainer")
 
         if left == 'memo_matrix':
@@ -221,9 +221,9 @@ class MemoContainer:
             raise ValueError('Invalid left value: choose one of [memo_matrix, filtered_memo_matrix]')
         
         if right == 'memo_matrix':
-            table_right = MemoContainer2.memo_matrix
+            table_right = memocontainer2.memo_matrix
         elif right == 'filtered_memo_matrix':
-            table_right = MemoContainer2.filtered_memo_matrix
+            table_right = memocontainer2.filtered_memo_matrix
         else:
             raise ValueError('Invalid right value: choose one of [memo_matrix, filtered_memo_matrix]')
         
