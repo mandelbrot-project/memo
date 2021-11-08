@@ -10,8 +10,8 @@ PATH_TEST_RESOURCES = os.path.join(PATH_ROOT, 'test_data')
 def test_spectra_documents():
     filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename)
-    
-    assert len(spectra.spectra), "Expected 3 spectra"
+
+    assert len(spectra.spectra) == 3, "Expected 3 spectra"
     assert type(spectra.spectra) == list, "Expected list of spectra"
     assert spectra.min_relative_intensity == 0.01, "Expected different default parameter"
     assert spectra.max_relative_intensity == 1.0, "Expected different default parameter"
@@ -28,6 +28,32 @@ def test_spectra_documents():
         "Expected differnt word in document"
     assert spectra.document.documents[2][-1] == "peak@445.11", \
         "Expected differnt word in document"
+
+
+def test_spectra_documents_changed_decimals():
+    filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
+    spectra = memo.SpectraDocuments(filename,
+                                    n_decimals=3)
+    assert len(spectra.spectra) == 3, "Expected 3 spectra"
+    assert spectra.n_decimals == 3, "Expected different parameter"
+    assert spectra.document.documents[0][0] == "peak@71.049", \
+        "Expected differnt word in document"
+    assert spectra.document.documents[2][-1] == "peak@445.114", \
+        "Expected differnt word in document"
+
+
+def test_spectra_documents_no_losses():
+    filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
+    spectra = memo.SpectraDocuments(filename,
+                                    losses_to=0)
+    assert len(spectra.spectra) == 3, "Expected 3 spectra"
+    assert spectra.n_decimals == 2, "Expected different parameter"
+    assert spectra.document.documents[0][0] == "peak@71.05", \
+        "Expected differnt word in document"
+    assert spectra.document.documents[1][-1] == "peak@278.19", \
+        "Expected differnt word in document"
+    assert "loss" not in [x.split("@")[0] for x in spectra.document.documents[1]], \
+        "Expected no losses."
 
 
 def test_feature_table():
