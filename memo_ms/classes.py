@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, field
 from collections import Counter
 from spec2vec import SpectrumDocument
 import pandas as pd
