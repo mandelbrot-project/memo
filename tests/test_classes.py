@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import pytest
 import memo_ms as memo
 
 
@@ -65,3 +66,28 @@ def test_feature_table():
     expected_first_row = np.array([8.73952054e+08, 1.48157905e+08, 9.83701048e+07])
     np.testing.assert_almost_equal(table.quant_table.to_numpy()[0, :],
                                    expected_first_row, decimal=0)
+
+
+def test_memo_container_exceptions():
+    container = memo.MemoContainer()
+    with pytest.raises(ValueError, match=r"featuretable argument missing"):
+        container.memo_from_aligned_samples(None, None)
+    with pytest.raises(ValueError, match=r"spectradocuments argument missing"):
+        container.memo_from_aligned_samples("something", None)
+    with pytest.raises(TypeError, match=r"featuretable argument must be of type FeatureTable"):
+        container.memo_from_aligned_samples("something", "something")
+
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    table = memo.FeatureTable(filename_table)
+    with pytest.raises(TypeError, match=r"spectradocuments argument must be of type SpectraDocuments"):
+        container.memo_from_aligned_samples(table, "something")
+
+
+def test_memo_container():
+    container = memo.MemoContainer()
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
+    spectra = memo.SpectraDocuments(filename_spectra)
+    table = memo.FeatureTable(filename_table)
+    container.memo_from_aligned_samples(table, spectra)
+    # TODO: add usefull tests -> what is expected for container.memo_matrix etc.
