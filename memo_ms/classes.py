@@ -88,17 +88,16 @@ class MemoContainer:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
 
-        if featuretable is None and spectradocuments is not None:
+        if featuretable is None:
             raise ValueError("featuretable argument missing")
-        elif featuretable is not None and spectradocuments is None:
+        if spectradocuments is None:
             raise ValueError("spectradocuments argument missing")
-        elif type(featuretable) != FeatureTable:
-            raise TypeError ("featuretable argument must be of type FeatureTable")
-        elif type(spectradocuments) != SpectraDocuments:
-            raise TypeError ("spectradocuments argument must be of type SpectraDocuments")
-        elif featuretable is not None and spectradocuments is not None:
-            print('generating memo_matrix from input featuretable and spectradocument')
-            self.feature_matrix = featuretable.quant_table
+        if type(featuretable) != FeatureTable:
+            raise TypeError("featuretable argument must be of type FeatureTable")
+        if type(spectradocuments) != SpectraDocuments:
+            raise TypeError("spectradocuments argument must be of type SpectraDocuments")
+        print('generating memo_matrix from input featuretable and spectradocument')
+        self.feature_matrix = featuretable.quant_table
 
         quant_table = featuretable.quant_table.copy()
         document = spectradocuments.document[['scans', 'documents']].set_index('scans')['documents'].to_dict()
