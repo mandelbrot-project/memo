@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, field
 from collections import Counter
 from spec2vec import SpectrumDocument
 import pandas as pd
@@ -61,7 +61,7 @@ class SpectraDocuments:
             loss_mz_to = self.losses_to, n_required = self.min_peaks_required
             )
         self.document = self._spec2doc()
-    
+
     def _spec2doc(self) -> pd.DataFrame:
         """
         Apply filters to spectra and convert them to words vectors with the number of specified decimals.
@@ -143,7 +143,6 @@ class FeatureTable:
 class MemoContainer:
     """Create an empty MemoContainer dataclass object
     """
-    
     def memo_from_aligned_samples(self, featuretable, spectradocuments, featuretable_to_use = 'feature_table') -> pd.DataFrame:
         """
         Use a featuretable and a spectradocuments to generate a MEMO matrix.
@@ -157,16 +156,16 @@ class MemoContainer:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
 
-        if featuretable is None and spectradocuments is not None:
+        if featuretable is None:
             raise ValueError("featuretable argument missing")
-        elif featuretable is not None and spectradocuments is None:
+        if spectradocuments is None:
             raise ValueError("spectradocuments argument missing")
-        elif type(featuretable) != FeatureTable:
-            raise TypeError ("featuretable argument must be of type FeatureTable")
-        elif type(spectradocuments) != SpectraDocuments:
-            raise TypeError ("spectradocuments argument must be of type SpectraDocuments")
-        elif featuretable is not None and spectradocuments is not None:
-            print('generating memo_matrix from input featuretable and spectradocument')
+        if not isinstance(featuretable, FeatureTable):
+            raise TypeError("featuretable argument must be of type FeatureTable")
+        if not isinstance(spectradocuments, SpectraDocuments):
+            raise TypeError("spectradocuments argument must be of type SpectraDocuments")
+        print('generating memo_matrix from input featuretable and spectradocument')
+        self.feature_matrix = featuretable.quant_table
 
         if featuretable_to_use == 'feature_table':
             feature_table = featuretable.feature_table.copy()
@@ -223,7 +222,7 @@ class MemoContainer:
             documents = [item for sublist in documents for item in sublist]
             documents = dict(Counter(documents))
             dic_memo[file.removesuffix('.mgf')] = documents
-            
+
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
         return None
 
@@ -271,14 +270,14 @@ class MemoContainer:
             table_left = self.filtered_memo_matrix
         else:
             raise ValueError('Invalid left value: choose one of [memo_matrix, filtered_memo_matrix]')
-        
+
         if right == 'memo_matrix':
             table_right = memocontainer2.memo_matrix
         elif right == 'filtered_memo_matrix':
             table_right = memocontainer2.filtered_memo_matrix
         else:
             raise ValueError('Invalid right value: choose one of [memo_matrix, filtered_memo_matrix]')
-        
+
         if drop_not_in_common == True:
             result = table_left.append(table_right, sort=False).dropna(axis='columns').fillna(0)
         else:
@@ -300,13 +299,11 @@ class MemoContainer:
         if table == 'memo_matrix':
             if self.memo_matrix == None:
                 raise ValueError('No memo_matrix to export')
-            else:
-                self.memo_matrix.to_csv(path, sep=sep)
+            self.memo_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_memo_matrix':
             if self.memo_matrix == None:
                 raise ValueError('No filtered_feature_matrix to export')
-            else:
-                self.filtered_feature_matrix.to_csv(path, sep=sep)
+            self.filtered_feature_matrix.to_csv(path, sep=sep)
 
         if table not in ['memo_matrix', 'filtered_memo_matrix']:
             raise ValueError('Invalid table value: choose one of [memo_matrix,filtered_memo_matrix]')
