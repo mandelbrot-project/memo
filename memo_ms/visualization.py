@@ -14,10 +14,10 @@ def plot_pcoa_2d(
     matrix, df_metadata, filename_col, group_col,
     metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2]
     ):
-    """ Simple 2D PCoA plot of a MEMO matrix using Plotly
+    """ Simple 2D PCoA plot of a MEMO matrix / Feature table using Plotly
 
     Args:
-        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
@@ -66,10 +66,10 @@ def plot_pcoa_3d(
     matrix, df_metadata, filename_col, group_col,
     metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3]
     ):
-    """ Simple 2D PCoA plot of a MEMO matrix using Plotly
+    """ Simple 2D PCoA plot of a MEMO matrix / Feature table using Plotly
 
     Args:
-        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
@@ -120,10 +120,10 @@ def plot_hca(
     plotly_discrete_cm = px.colors.qualitative.Plotly,
     linkage_method = 'ward', linkage_metric = 'euclidean',
     norm = False, scaling = False):
-    """Simple HCA plot of a MEMO matrix using matplotlib
+    """Simple HCA plot of a MEMO matrix / Feature table using matplotlib
 
     Args:
-        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
@@ -171,10 +171,10 @@ def plot_heatmap(
     plotly_discrete_cm = px.colors.qualitative.Plotly,
     linkage_method = 'ward', linkage_metric = 'euclidean',
     heatmap_metric = 'braycurtis', norm = False, scaling = False):
-    """HCA and heatmap plot of a MEMO matrix using Plotly
+    """HCA and heatmap plot of a MEMO matrix / Feature table using Plotly
 
     Args:
-        matrix (DataFrame): A DataFrame in the MemoContainer.memo_matrix or MemoContainer.feature_table format
+        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
