@@ -30,6 +30,7 @@ def plot_pcoa_2d(
         None
     """
     #pylint: disable=too-many-arguments
+    #pylint: disable=too-many-locals
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm is True:
@@ -50,13 +51,13 @@ def plot_pcoa_2d(
     exp_var_pc2 = round(100*pcoa_results.proportion_explained[pc_to_plot[1] - 1 ], 1)
 
     fig = px.scatter(x=x, y=y, color=df_metadata_resticted[group_col],
-    labels={'x': f"PC{pc_to_plot[0]} ({exp_var_pc1} %)",
-            'y': f"PC{pc_to_plot[1]} ({exp_var_pc2} %)",
-            'color': group_col
-            },
-    title="2D PCoA",
-    hover_name=df_metadata_resticted[filename_col],
-    template="simple_white"
+        labels={'x': f"PC{pc_to_plot[0]} ({exp_var_pc1} %)",
+                'y': f"PC{pc_to_plot[1]} ({exp_var_pc2} %)",
+                'color': group_col
+                },
+        title="2D PCoA",
+        hover_name=df_metadata_resticted[filename_col],
+        template="simple_white"
     )
     fig.update_layout({'width':1000, 'height':650})
     fig.show()
@@ -82,6 +83,7 @@ def plot_pcoa_3d(
         None
     """
     #pylint: disable=too-many-arguments
+    #pylint: disable=too-many-locals
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm is True:
@@ -103,14 +105,14 @@ def plot_pcoa_3d(
     exp_var_pc3 = round(100*pcoa_results.proportion_explained[pc_to_plot[2] - 1 ], 1)
 
     fig = px.scatter_3d(x=x, y=y, z=z, color=df_metadata_resticted[group_col],
-    labels={'x': f"PC{pc_to_plot[0]} ({exp_var_pc1} %)",
-            'y': f"PC{pc_to_plot[1]} ({exp_var_pc2} %)",
-            'z': f"PC{pc_to_plot[2]} ({exp_var_pc3} %)",
-            'color': group_col
-            },
-    title="3D PCoA",
-    hover_name=df_metadata_resticted[filename_col],
-    template="simple_white"
+        labels={'x': f"PC{pc_to_plot[0]} ({exp_var_pc1} %)",
+                'y': f"PC{pc_to_plot[1]} ({exp_var_pc2} %)",
+                'z': f"PC{pc_to_plot[2]} ({exp_var_pc3} %)",
+                'color': group_col
+                },
+        title="3D PCoA",
+        hover_name=df_metadata_resticted[filename_col],
+        template="simple_white"
     )
     fig.update_layout({'width':1000, 'height':650})
     fig.show()
@@ -138,6 +140,7 @@ def plot_hca(
         None
     """
     #pylint: disable=too-many-arguments
+    #pylint: disable=too-many-locals
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm is True:
@@ -190,6 +193,7 @@ def plot_heatmap(
         None
     """
     #pylint: disable=too-many-arguments
+    #pylint: disable=too-many-locals
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm is True:
