@@ -74,7 +74,6 @@ class FeatureTable:
 class MemoContainer:
     """Create an empty MemoContainer dataclass object
     """
-
     def memo_from_aligned_samples(self, featuretable, spectradocuments) -> pd.DataFrame:
         """
         Use a featuretable and a spectradocuments to generate a MEMO matrix.
@@ -113,7 +112,8 @@ class MemoContainer:
         memo_matrix.fillna(0, inplace=True)
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
-        return None
+        self.filtered_memo_matrix = None
+        self.filtered_feature_matrix = None
 
     def memo_from_unaligned_samples(self, path_to_samples_dir, min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
@@ -151,7 +151,6 @@ class MemoContainer:
             dic_memo[file.removesuffix('.mgf')] = documents
 
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
-        return None
 
     def filter_matrix(self, matrix_to_use, samples_pattern, max_occurence):
         """Filter a feature table or a MEMO matrix: remove samples matching samples_pattern
@@ -245,23 +244,22 @@ class MemoContainer:
             None
         """
         if table == 'memo_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No memo_matrix to export')
             self.memo_matrix.to_csv(path, sep=sep)
         elif table == 'feature_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No feature_matrix to export')
             self.feature_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_memo_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No filtered_memo_matrix to export')
             self.filtered_memo_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_feature_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No filtered_feature_matrix to export')
             self.filtered_feature_matrix.to_csv(path, sep=sep)
         if table not in ['memo_matrix', 'feature_matrix', 'filtered_memo_matrix', 'filtered_feature_matrix']:
             raise ValueError('Invalid table value: choose one of [memo_matrix, feature_matrix, filtered_memo_matrix, filtered_feature_matrix]')
 
         return None
-
