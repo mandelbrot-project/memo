@@ -29,11 +29,12 @@ def plot_pcoa_2d(
     Returns:
         None
     """
+    #pylint: disable=too-many-arguments
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
-    if norm == True:
+    if norm is True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
-    if scaling == True:
+    if scaling is True:
         matrix = matrix.to_numpy()
         matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
@@ -63,7 +64,7 @@ def plot_pcoa_2d(
 
 def plot_pcoa_3d(
     matrix, df_metadata, filename_col, group_col,
-    metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2,3]
+    metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = (1, 2, 3)
     ):
     """ Simple 2D PCoA plot of a MEMO matrix using Plotly
 
@@ -80,11 +81,12 @@ def plot_pcoa_3d(
     Returns:
         None
     """
+    #pylint: disable=too-many-arguments
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
-    if norm == True:
+    if norm is True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
-    if scaling == True:
+    if scaling is True:
         matrix = matrix.to_numpy()
         matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
@@ -135,12 +137,12 @@ def plot_hca(
     Returns:
         None
     """
-
+    #pylint: disable=too-many-arguments
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
-    if norm == True:
+    if norm is True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
-    if scaling == True:
+    if scaling is True:
         matrix = matrix.to_numpy()
         matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
@@ -187,11 +189,12 @@ def plot_heatmap(
     Returns:
         None
     """
+    #pylint: disable=too-many-arguments
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
-    if norm == True:
+    if norm is True:
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
-    if scaling == True:
+    if scaling is True:
         matrix = matrix.to_numpy()
         matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
