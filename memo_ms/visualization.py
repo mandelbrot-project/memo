@@ -1,4 +1,3 @@
-import pandas as pd
 import numpy as np
 import scipy as sp
 from itertools import cycle
@@ -10,9 +9,10 @@ import plotly.figure_factory as ff
 from matplotlib import pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
 
+
 def plot_pcoa_2d(
     matrix, df_metadata, filename_col, group_col,
-    metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = [1,2]
+    metric = 'braycurtis', norm = False, scaling = False, pc_to_plot = (1, 2)
     ):
     """ Simple 2D PCoA plot of a MEMO matrix using Plotly
 
@@ -35,7 +35,7 @@ def plot_pcoa_2d(
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
         matrix = matrix.to_numpy()
-        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)   
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
 
     dm_memo = sp.spatial.distance.pdist(matrix, metric)
@@ -44,7 +44,7 @@ def plot_pcoa_2d(
     x = pcoa_results.samples[f'PC{pc_to_plot[0]}']
     y = pcoa_results.samples[f'PC{pc_to_plot[1]}']
 
-    
+
     exp_var_pc1 = round(100*pcoa_results.proportion_explained[pc_to_plot[0] - 1 ], 1)
     exp_var_pc2 = round(100*pcoa_results.proportion_explained[pc_to_plot[1] - 1 ], 1)
 
@@ -59,7 +59,6 @@ def plot_pcoa_2d(
     )
     fig.update_layout({'width':1000, 'height':650})
     fig.show()
-    return None
 
 
 def plot_pcoa_3d(
@@ -87,7 +86,7 @@ def plot_pcoa_3d(
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
         matrix = matrix.to_numpy()
-        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)       
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
 
     dm_memo = sp.spatial.distance.pdist(matrix, metric)
@@ -113,7 +112,7 @@ def plot_pcoa_3d(
     )
     fig.update_layout({'width':1000, 'height':650})
     fig.show()
-    return None
+
 
 def plot_hca(
     matrix, df_metadata, filename_col, group_col,
@@ -143,7 +142,7 @@ def plot_hca(
         matrix = matrix.div(matrix.sum(axis=1), axis=0)
     if scaling == True:
         matrix = matrix.to_numpy()
-        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)       
+        matrix = np.log10(matrix, out=np.zeros_like(matrix), where=(matrix!=0)) # Log scale (base-10)
         matrix = cb.utils.scale(matrix, method='pareto')
 
     groups = df_metadata_resticted[group_col].unique()
@@ -151,12 +150,12 @@ def plot_hca(
     dic_col = dict(zip(groups, cycle(colors_list)))
 
     Z = linkage(matrix, method=linkage_method, metric=linkage_metric)
-    
-    fig = plt.figure(figsize=(12, 8), dpi=80)
+
+    plt.figure(figsize=(12, 8), dpi=80)
 
     dendrogram(
         Z, labels =df_metadata_resticted[group_col].to_list(),
-        leaf_rotation=0, 
+        leaf_rotation=0,
         orientation='left'
         )
     xlbls = plt.gca().get_yticklabels()
@@ -164,7 +163,7 @@ def plot_hca(
         lbl.set_color(dic_col[lbl.get_text()])
 
     plt.show()
-    return None
+
 
 def plot_heatmap(
     matrix, df_metadata, filename_col, group_col,
@@ -199,7 +198,7 @@ def plot_heatmap(
 
     dm_memo = sp.spatial.distance.pdist(matrix, heatmap_metric)
 
-    fig = ff.create_dendrogram(matrix, orientation='bottom', labels= df_metadata_resticted[group_col].to_list(), 
+    fig = ff.create_dendrogram(matrix, orientation='bottom', labels= df_metadata_resticted[group_col].to_list(),
     linkagefun=lambda x: linkage(x, method=linkage_method, metric = linkage_metric)
     )
     for i in range(len(fig['data'])):
@@ -207,7 +206,7 @@ def plot_heatmap(
 
     # Create Side Dendrogram
     dendro_side = ff.create_dendrogram(matrix, orientation='right',
-    linkagefun=lambda x: linkage(x, method=linkage_method, metric = linkage_metric), 
+    linkagefun=lambda x: linkage(x, method=linkage_method, metric = linkage_metric),
     )
     for i in range(len(dendro_side['data'])):
         dendro_side['data'][i]['xaxis'] = 'x2'
@@ -258,7 +257,6 @@ def plot_heatmap(
     colors_list = plotly_discrete_cm
     dic_col = dict(zip(groups, cycle(colors_list)))
     scats = []
-    i_color = 0
     for group in groups:
         scat_group = df_meta_reindex[df_meta_reindex[group_col] == group]
         scat_group = go.Scatter(
@@ -317,10 +315,10 @@ def plot_heatmap(
                                     'zeroline': False,
                                     'showticklabels': False,
                                     'ticks':""})
-        
+
     labels_to_show_in_legend = groups
 
-    for trace in fig['data']: 
+    for trace in fig['data']:
         if (not trace['name'] in labels_to_show_in_legend):
             trace['showlegend'] = False
 
@@ -332,4 +330,3 @@ def plot_heatmap(
 
     fig.update_xaxes(tickangle=45)
     fig.show()
-    return None

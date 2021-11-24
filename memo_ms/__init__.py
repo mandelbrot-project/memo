@@ -6,7 +6,6 @@ from .classes import FeatureTable
 from .classes import MemoContainer
 
 
-__name__ = "memo_ms"
 __all__ = [
     "__version__",
     "import_data",
