@@ -74,3 +74,30 @@ You can clone the repository to get the demo spectra and quant table files!
 Once installed, try it using the tutorial jupyter notebook.
 
 Please add feedback to the issues section. Thanks !
+
+## Documentation for developers
+
+#### Installation
+Create an environment with
+```
+git clone https://github.com/mandelbrot-project/memo.git
+cd memo
+conda create --name memo-dev python=3.8
+conda activate memo-dev
+```
+Then install dependencies and memo:
+```
+python -m pip install --upgrade pip
+pip install numpy
+pip install --editable .[dev]
+```
+
+#### Run tests
+Memo tests can be run by:
+```
+pytest
+``` 
+And the code linter with
+```
+prospector
+```
