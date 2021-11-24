@@ -225,7 +225,7 @@ class MemoContainer:
         else:
             raise ValueError('Invalid right value: choose one of [memo_matrix, filtered_memo_matrix]')
 
-        if drop_not_in_common == True:
+        if drop_not_in_common is True:
             result = table_left.append(table_right, sort=False).dropna(axis='columns').fillna(0)
         else:
             result = table_left.append(table_right, sort=False).fillna(0)
@@ -261,5 +261,3 @@ class MemoContainer:
             self.filtered_feature_matrix.to_csv(path, sep=sep)
         if table not in ['memo_matrix', 'feature_matrix', 'filtered_memo_matrix', 'filtered_feature_matrix']:
             raise ValueError('Invalid table value: choose one of [memo_matrix, feature_matrix, filtered_memo_matrix, filtered_feature_matrix]')
-
-        return None
