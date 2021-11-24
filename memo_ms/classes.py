@@ -3,7 +3,7 @@ from collections import Counter
 from spec2vec import SpectrumDocument
 import pandas as pd
 import numpy as np
-import memo_ms.import_data as import_data
+from memo_ms import import_data
 from tqdm import tqdm
 import os
 
@@ -131,6 +131,7 @@ class MemoContainer:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
+        #pylint: disable=too-many-arguments
         dic_memo = {}
         mgf_file = []
         for file in os.listdir(path_to_samples_dir):
@@ -194,7 +195,6 @@ class MemoContainer:
             self.filtered_feature_matrix = table_filtered
         elif matrix_to_use == 'filtered_feature_matrix':
             self.filtered_feature_matrix = table_filtered
-        return None
 
     def merge_memo(self, memocontainer2, left, right, drop_not_in_common=False):
         """Merge 2 MEMO matrix
@@ -209,7 +209,7 @@ class MemoContainer:
         """
         output = MemoContainer()
 
-        if type(memocontainer2) != MemoContainer:
+        if not isinstance(memocontainer2, MemoContainer):
             raise TypeError ("merge_memo() MemoContainer argument must be a MemoContainer")
 
         if left == 'memo_matrix':
