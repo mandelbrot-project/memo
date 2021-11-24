@@ -21,7 +21,8 @@ def plot_pcoa_2d(
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
-        metric (str, optional): Distance metric to use, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html. Defaults to 'braycurtis'.
+        metric (str, optional): Distance metric to use, see
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html. Defaults to 'braycurtis'.
         norm (bool, optional): Apply samples normalization. Defaults to False.
         scaling (bool, optional): Apply pareto scaling to MEMO matrix columns. Defaults to False.
         pc_to_plot (list of int, optional): PCs to plot. Defaults to [1,2].
@@ -74,7 +75,8 @@ def plot_pcoa_3d(
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
-        metric (str, optional): Distance metric to use, see https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html. Defaults to 'braycurtis'.
+        metric (str, optional): Distance metric to use, see
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html. Defaults to 'braycurtis'.
         norm (bool, optional): Apply samples normalization. Defaults to False.
         scaling (bool, optional): Apply pareto scaling to MEMO matrix columns. Defaults to False.
         pc_to_plot (list of int, optional): PCs to plot. Defaults to [1,2,3].
@@ -141,6 +143,7 @@ def plot_hca(
     """
     #pylint: disable=too-many-arguments
     #pylint: disable=too-many-locals
+    #pylint: disable=dangerous-default-value
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm is True:
@@ -194,6 +197,7 @@ def plot_heatmap(
     """
     #pylint: disable=too-many-arguments
     #pylint: disable=too-many-locals
+    #pylint: disable=dangerous-default-value
     df_metadata_resticted = df_metadata[df_metadata[filename_col].isin(list(matrix.index))]
     matrix = matrix[matrix.index.isin(list(df_metadata_resticted[filename_col]))].reindex(list(df_metadata_resticted[filename_col]))
     if norm is True:
