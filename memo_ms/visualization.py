@@ -17,7 +17,7 @@ def plot_pcoa_2d(
     """ Simple 2D PCoA plot of a MEMO matrix / Feature table using Plotly
 
     Args:
-        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
+        matrix (DataFrame): A Table in the MemoMatrix.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
@@ -69,7 +69,7 @@ def plot_pcoa_3d(
     """ Simple 2D PCoA plot of a MEMO matrix / Feature table using Plotly
 
     Args:
-        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
+        matrix (DataFrame): A Table in the MemoMatrix.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
@@ -123,7 +123,7 @@ def plot_hca(
     """Simple HCA plot of a MEMO matrix / Feature table using matplotlib
 
     Args:
-        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
+        matrix (DataFrame): A Table in the MemoMatrix.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting
@@ -174,7 +174,7 @@ def plot_heatmap(
     """HCA and heatmap plot of a MEMO matrix / Feature table using Plotly
 
     Args:
-        matrix (DataFrame): A Table in the MemoContainer.memo_matrix or FeatureTable.feature_table format
+        matrix (DataFrame): A Table in the MemoMatrix.memo_matrix or FeatureTable.feature_table format
         df_metadata (DataFrame): Metadata of the MEMO matrix samples
         filename_col (str): Column name in df_metadata to match memo_matrix index
         group_col (str): Column name in df_metadata to use as groups for plotting

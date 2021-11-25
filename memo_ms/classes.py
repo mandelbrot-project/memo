@@ -90,60 +90,38 @@ class FeatureTable:
     def __post_init__(self):
         self.feature_table = import_data.import_mzmine2_quant_table(path = self.path)
         
-    def filter(self, samples_pattern, table_to_filter = 'feature_table', max_occurence = None):
+    def filter(self, samples_pattern, max_occurence = None):
         """Filter a feature table: remove samples matching samples_pattern
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
         Args:
             samples_pattern (str): the str pattern to match in samples to filter
-            table_to_filter (str): memo_matrix or feature_matrix: the matrix to filter
             max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
 
         Returns:
             self.filtered_feature_table (DataFrame): A filtered feature table
         """
-        if table_to_filter == 'feature_table':
-            table = self.feature_table.copy()
-        elif table_to_filter == 'filtered_feature_table':
-            table = self.filtered_feature_table.copy()
-        else:
-            raise ValueError('Invalid table_to_filter value: choose one of [feature_table, filtered_feature_table]')
-
-        self.filtered_feature_table = filter_table(table, samples_pattern, max_occurence)        
-        return None
+        self.feature_table = filter_table(self.feature_table, samples_pattern, max_occurence)            
+        return self
     
-    def export_matrix(self, path, table = 'feature_table', sep = ','):
+    def export_matrix(self, path, sep = ','):
         """Export a given matrix
 
         Args:
             path (str): path to export
-            table (str): the table to export
             sep (str): separator
 
         Returns:
             None
         """   
-        if table == 'feature_table':
-            if self.memo_matrix == None:
-                raise ValueError('No feature_matrix to export')
-            else:
-                self.feature_matrix.to_csv(path, sep=sep)
-        elif table == 'filtered_feature_table':
-            if self.memo_matrix == None:
-                raise ValueError('No filtered_feature_matrix to export')
-            else:
-                self.filtered_feature_matrix.to_csv(path, sep=sep)
-                
-        if table not in ['feature_table', 'filtered_feature_table']:
-            raise ValueError('Invalid table value: choose one of [feature_table, filtered_feature_table]')
-
+        self.feature_table.to_csv(path, sep=sep)
         return None
     
 @dataclass
-class MemoContainer:
-    """Create an empty MemoContainer dataclass object
+class MemoMatrix:
+    """Create an empty MemoMatrix dataclass object
     """
-    def memo_from_aligned_samples(self, featuretable, spectradocuments, featuretable_to_use = 'feature_table') -> pd.DataFrame:
+    def memo_from_aligned_samples(self, featuretable, spectradocuments) -> pd.DataFrame:
         """
         Use a featuretable and a spectradocuments to generate a MEMO matrix.
         Returns a pd.DataFrame MEMO matrix.
@@ -155,7 +133,6 @@ class MemoContainer:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
-
         if featuretable is None:
             raise ValueError("featuretable argument missing")
         if spectradocuments is None:
@@ -167,13 +144,7 @@ class MemoContainer:
         print('generating memo_matrix from input featuretable and spectradocument')
         self.feature_matrix = featuretable.quant_table
 
-        if featuretable_to_use == 'feature_table':
-            feature_table = featuretable.feature_table.copy()
-        elif featuretable_to_use == 'filtered_feature_table':
-            feature_table = featuretable.filtered_feature_table.copy()    
-        else:
-            raise ValueError('Invalid featuretable_to_use value: choose one of [feature_table, filtered_feature_table]')
-        
+        feature_table = featuretable.feature_table.copy()
         document = spectradocuments.document[['scans', 'documents']].set_index('scans')['documents'].to_dict()
         feature_table[feature_table == 0] = float('nan')
         results = feature_table.stack().reset_index(level=1).groupby(level=0, sort=False)['row ID'].apply(list).to_dict()        
@@ -212,7 +183,6 @@ class MemoContainer:
                 mgf_file.append(file)
         for file in tqdm(mgf_file):
             spectra = import_data.load_and_filter_from_mgf(
-
                 path = os.path.join(path_to_samples_dir, file), min_relative_intensity = min_relative_intensity,
                 max_relative_intensity = max_relative_intensity, loss_mz_from = losses_from, loss_mz_to = losses_to, n_required = min_peaks_required
                 )
@@ -226,58 +196,39 @@ class MemoContainer:
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
         return None
 
-    def filter_matrix(self, samples_pattern, matrix_to_filter = 'memo_matrix', max_occurence = None):
+    def filter(self, samples_pattern, max_occurence = None):
         """Filter a MEMO matrix: remove samples matching samples_pattern
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
         Args:
             samples_pattern (str): the str pattern to match in samples to filter
-            matrix_to_filter (str): memo_matrix or feature_matrix: the matrix to filter
             max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
 
         Returns:
             self.filtered_memo_matrix (DataFrame): A filtered feature table matrix
         """
-        if matrix_to_filter == 'memo_matrix':
-            table = self.memo_matrix.copy()
-        elif matrix_to_filter == 'filtered_memo_matrix':
-            table = self.filtered_memo_matrix.copy()
-        else:
-            raise ValueError('Invalid matrix_to_filter value: choose one of [memo_matrix, filtered_memo_matrix]')
+        self.memo_matrix = filter_table(self.memo_matrix, samples_pattern, max_occurence)        
+        return self
 
-        self.filtered_memo_matrix = filter_table(table, samples_pattern, max_occurence)
-        return None
-
-    def merge_memo(self, memocontainer2, left, right, drop_not_in_common=False):
+    def merge_memo(self, memomatrix_2, drop_not_in_common=False):
         """Merge 2 MEMO matrix
 
         Args:
-            memocontainer2 (MemoContainer): MemoContainer dataclass object containing the 2nd MEMO matrix to merge
+            memocontainer2 (MemoContainer): MemoMatrix dataclass object containing the 2nd MEMO matrix to merge
             left (str): The left MEMO matrix to merge: memo_matrix OR filtered_memo_matrix
             right (str): The right MEMO matrix to merge: memo_matrix OR filtered_memo_matrix
             drop_not_in_common (bool): Drop peaks/losses not in common
         Returns:
-            MemoContainer (MemoContainer): A MemoContainer dataclass object containing the merged MEMO matrix
+            MemoContainer (MemoContainer): A MemoMatrix dataclass object containing the merged MEMO matrix
         """
-        output = MemoContainer()
+        output = MemoMatrix()
 
-        if type(memocontainer2) != MemoContainer:
-            raise TypeError ("merge_memo() MemoContainer argument must be a MemoContainer")
+        if not isinstance(memomatrix_2, MemoMatrix):
+            raise TypeError ("merge_memo() memomatrix_2 argument must be a MemoMatrix")
 
-        if left == 'memo_matrix':
-            table_left = self.memo_matrix
-        elif left == 'filtered_memo_matrix':
-            table_left = self.filtered_memo_matrix
-        else:
-            raise ValueError('Invalid left value: choose one of [memo_matrix, filtered_memo_matrix]')
-
-        if right == 'memo_matrix':
-            table_right = memocontainer2.memo_matrix
-        elif right == 'filtered_memo_matrix':
-            table_right = memocontainer2.filtered_memo_matrix
-        else:
-            raise ValueError('Invalid right value: choose one of [memo_matrix, filtered_memo_matrix]')
-
+        table_left = self.memo_matrix
+        table_right = memomatrix_2.memo_matrix
+        
         if drop_not_in_common == True:
             result = table_left.append(table_right, sort=False).dropna(axis='columns').fillna(0)
         else:
@@ -295,18 +246,6 @@ class MemoContainer:
 
         Returns:
             None
-        """
-        if table == 'memo_matrix':
-            if self.memo_matrix is None:
-                raise ValueError('No memo_matrix to export')
-            self.memo_matrix.to_csv(path, sep=sep)
-        elif table == 'filtered_memo_matrix':
-            if self.memo_matrix is None:
-                raise ValueError('No filtered_feature_matrix to export')
-            self.filtered_feature_matrix.to_csv(path, sep=sep)
-
-        if table not in ['memo_matrix', 'filtered_memo_matrix']:
-            raise ValueError('Invalid table value: choose one of [memo_matrix,filtered_memo_matrix]')
-
+        """      
+        self.memo_matrix.to_csv(path, sep=sep)
         return None
-
