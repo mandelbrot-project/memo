@@ -297,7 +297,7 @@ class MemoContainer:
             None
         """
         if table == 'memo_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No memo_matrix to export')
             self.memo_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_memo_matrix':
