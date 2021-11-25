@@ -90,7 +90,7 @@ class FeatureTable:
     def __post_init__(self):
         self.feature_table = import_data.import_mzmine2_quant_table(path = self.path)
         
-    def filter_table(self, samples_pattern, table_to_filter = 'feature_table', max_occurence = None):
+    def filter(self, samples_pattern, table_to_filter = 'feature_table', max_occurence = None):
         """Filter a feature table: remove samples matching samples_pattern
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
