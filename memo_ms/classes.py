@@ -301,7 +301,7 @@ class MemoContainer:
                 raise ValueError('No memo_matrix to export')
             self.memo_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_memo_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No filtered_feature_matrix to export')
             self.filtered_feature_matrix.to_csv(path, sep=sep)
 
