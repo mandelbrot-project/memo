@@ -5,7 +5,7 @@ from memo_ms.import_data import import_mzmine2_quant_table
 
 from memo_ms.classes import SpectraDocuments
 from memo_ms.classes import FeatureTable
-from memo_ms.classes import MemoContainer
+from memo_ms.classes import MemoMatrix
 
 from memo_ms.visualization import plot_pcoa_2d
 from memo_ms.visualization import plot_pcoa_3d
