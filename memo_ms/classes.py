@@ -142,7 +142,6 @@ class MemoMatrix:
         if not isinstance(spectradocuments, SpectraDocuments):
             raise TypeError("spectradocuments argument must be of type SpectraDocuments")
         print('generating memo_matrix from input featuretable and spectradocument')
-        self.feature_matrix = featuretable.quant_table
 
         feature_table = featuretable.feature_table.copy()
         document = spectradocuments.document[['scans', 'documents']].set_index('scans')['documents'].to_dict()
