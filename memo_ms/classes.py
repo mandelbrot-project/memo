@@ -214,9 +214,8 @@ class MemoMatrix:
 
         Args:
             memocontainer2 (MemoContainer): MemoMatrix dataclass object containing the 2nd MEMO matrix to merge
-            left (str): The left MEMO matrix to merge: memo_matrix OR filtered_memo_matrix
-            right (str): The right MEMO matrix to merge: memo_matrix OR filtered_memo_matrix
             drop_not_in_common (bool): Drop peaks/losses not in common
+            
         Returns:
             MemoContainer (MemoContainer): A MemoMatrix dataclass object containing the merged MEMO matrix
         """
@@ -235,14 +234,13 @@ class MemoMatrix:
         output.memo_matrix = result
         return output
 
-    def export_matrix(self, path, table = 'memo_matrix', sep = ','):
+    def export_matrix(self, path, sep = ','):
         """Export a given matrix
 
         Args:
             path (str): path to export
-            table (str): the table to export
             sep (str): separator
-
+            
         Returns:
             None
         """      

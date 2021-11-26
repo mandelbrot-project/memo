@@ -83,8 +83,8 @@ def test_memo_container_exceptions():
         container.memo_from_aligned_samples(table, "something")
 
 
-def test_memo_container():
-    container = memo.MemoContainer()
+def test_memo_matrix():
+    container = memo.MemoMatrix()
     filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
     filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename_spectra)
