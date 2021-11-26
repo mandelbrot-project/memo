@@ -41,4 +41,42 @@ def import_mzmine2_quant_table(path) -> pd.DataFrame:
     quant_table.rename(columns = lambda x: x.replace(' Peak area', ''), inplace=True)
     quant_table = quant_table.transpose()
     quant_table.index.name = 'filename'
+    quant_table.columns.name = 'feature_id'
+    return quant_table
+
+def import_msdial_quant_table(path) -> pd.DataFrame:
+    """Import feature quantification table generated from MS-DIAL and clean it
+
+    Args:
+        path (str): Path to feature quantification table
+
+    Returns:
+        quant_table (DataFrame): A cleaned MS-DIAL feature quantification table
+    """
+    quant_table = pd.read_csv(path, sep='\t', index_col=0)
+    quant_table = quant_table.drop(quant_table.filter(regex='Unnamed').columns, axis=1)
+    quant_table = quant_table[quant_table.index.notnull()]
+    quant_table.columns = quant_table.iloc[0]
+    quant_table = quant_table.iloc[1: , :]
+    quant_table = quant_table.drop(columns=['MS/MS spectrum']).transpose()
+    quant_table.index.name = 'filename'
+    quant_table.columns.name = 'feature_id'
+    return quant_table
+
+def import_xcms_quant_table(path) -> pd.DataFrame:
+    """Import feature quantification table generated from XCMS and clean it
+
+    Args:
+        path (str): Path to feature quantification table
+
+    Returns:
+        quant_table (DataFrame): A cleaned XCMS feature quantification table
+    """
+    quant_table = pd.read_csv(path, sep='\t', index_col=0)
+    ext = quant_table.columns[-1].split(sep='.')[-1]
+    quant_table = quant_table.filter(like=ext, axis=1)
+    quant_table.index = quant_table.index.str.replace('FT', '').astype(int)
+    quant_table = quant_table.transpose().fillna(0)
+    quant_table.index.name = 'filename'
+    quant_table.columns.name = 'feature_id'
     return quant_table

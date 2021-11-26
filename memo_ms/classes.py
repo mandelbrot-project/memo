@@ -76,19 +76,28 @@ class SpectraDocuments:
 
 @dataclass
 class FeatureTable:
-    """Create a FeatureTable dataclass object from a MzMine2 feature table
+    """Create a FeatureTable dataclass object from a feature table
 
     Args:
-        path (str): Path to an MzMine2 feature table file (.csv)
+        path (str): Path to a feature table file (.csv)
+        software (str): One of [mzmine, xcms, msdial]: the software used for feature detection
 
     Returns:
-        self.feature_table (DataFrame): A cleaned MzMine2 feature quantification table
+        self.feature_table (DataFrame): A cleaned feature quantification table
     """
     path : str
+    software : str
     feature_table : pd.DataFrame = field(init=False)
 
     def __post_init__(self):
-        self.feature_table = import_data.import_mzmine2_quant_table(path = self.path)
+        if self.software == 'mzmine':
+            self.feature_table = import_data.import_mzmine2_quant_table(path = self.path)
+        elif self.software == 'xcms':
+            self.feature_table = import_data.import_xcms_quant_table(path = self.path)
+        elif self.software == 'msdial':
+            self.feature_table = import_data.import_msdial_quant_table(path = self.path)
+        else:
+            raise ValueError("software argument missing, choose one of the currently supported pre-processing softwares: [mzmine, xcms, msdial]")
         
     def filter(self, samples_pattern, max_occurence = None):
         """Filter a feature table: remove samples matching samples_pattern
@@ -146,7 +155,7 @@ class MemoMatrix:
         feature_table = featuretable.feature_table.copy()
         document = spectradocuments.document[['scans', 'documents']].set_index('scans')['documents'].to_dict()
         feature_table[feature_table == 0] = float('nan')
-        results = feature_table.stack().reset_index(level=1).groupby(level=0, sort=False)['row ID'].apply(list).to_dict()        
+        results = feature_table.stack().reset_index(level=1).groupby(level=0, sort=False)['feature_id'].apply(list).to_dict()        
         for samples in tqdm(results):
             results[samples] = [document.get(item,item) for item in results[samples]]
             results[samples] = [ x for x in results[samples] if not isinstance(x, int)]
