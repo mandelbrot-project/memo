@@ -3,7 +3,7 @@ from collections import Counter
 from spec2vec import SpectrumDocument
 import pandas as pd
 import numpy as np
-import memo_ms.import_data as import_data
+from memo_ms import import_data
 from tqdm import tqdm
 import os
 
@@ -166,7 +166,8 @@ class MemoMatrix:
         memo_matrix.fillna(0, inplace=True)
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
-        return None
+        self.filtered_memo_matrix = None
+        self.filtered_feature_matrix = None
 
     def memo_from_unaligned_samples(self, path_to_samples_dir, min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
@@ -184,6 +185,7 @@ class MemoMatrix:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
+        #pylint: disable=too-many-arguments
         dic_memo = {}
         mgf_file = []
         for file in os.listdir(path_to_samples_dir):
@@ -202,7 +204,6 @@ class MemoMatrix:
             dic_memo[file.removesuffix('.mgf')] = documents
 
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
-        return None
 
     def filter(self, samples_pattern, max_occurence = None):
         """Filter a MEMO matrix: remove samples matching samples_pattern
@@ -236,7 +237,7 @@ class MemoMatrix:
         table_left = self.memo_matrix
         table_right = memomatrix_2.memo_matrix
         
-        if drop_not_in_common == True:
+        if drop_not_in_common is True:
             result = table_left.append(table_right, sort=False).dropna(axis='columns').fillna(0)
         else:
             result = table_left.append(table_right, sort=False).fillna(0)
@@ -254,4 +255,3 @@ class MemoMatrix:
             None
         """      
         self.memo_matrix.to_csv(path, sep=sep)
-        return None
