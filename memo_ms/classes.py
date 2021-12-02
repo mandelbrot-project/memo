@@ -124,7 +124,6 @@ class FeatureTable:
             None
         """   
         self.feature_table.to_csv(path, sep=sep)
-        return None
     
 @dataclass
 class MemoMatrix:
