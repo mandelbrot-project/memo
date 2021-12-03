@@ -1,0 +1,32 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: MEMO - Ms2 basEd saMple vectOrization
+message: >-
+  MEMO is a method allowing a Retention Time (RT)
+  agnostic alignment of metabolomics samples using
+  the fragmentation spectra (MS2) of their
+  consituents.
+type: software
+authors:
+  - given-names: Arnaud
+    family-names: Gaudry
+    email: arnaud.gaudry@unige.ch
+  - given-names: Louis-Félix
+    family-names: Nothias
+    email: louis-felix.nothias@unige.ch
+  - given-names: Florian
+    family-names: Huber
+    email: florian.huber@hs-duesseldorf.de
+  - family-names: Cretton
+    given-names: Sylvian
+    email: sylvian.cretton@unige.ch
+  - given-names: Marcel
+    family-names: Kaiser
+  - given-names: Jean-Luc
+    family-names: Wolfender
+    email: jean-luc.wolfender@unige.ch
+  - given-names: Pierre-Marie
+    family-names: Allard
+    email: pierre-marie.allard@unifr.ch
