@@ -3,12 +3,15 @@
 # %% [markdown]
 # # MEMO Tutorial on the Qemistree Evaluation Dataset
 # %% [markdown]
-# In this tutorial, we will use the Qemistree published dataset (https://doi.org/10.1038/s41589-020-00677-3) to apply the MS2 BasEd SaMple VectOrization (MEMO) method
-# 
-# The dataset is constitued of 2 fecal samples, 1 tomato sample and 1 plasma sample, plus different binary/quaternary mixtures of these four samples. Samples were profiled in UHPLC-MS/MS (Q-Exactive spectrometer) using 2 different LC-methods. Each sample was acquired in triplicates using each LC-method (see Qemistree paper for details).
+# In this tutorial, we will use the Qemistree published dataset (https://doi.org/10.1038/s41589-020-00677-3)
+# to apply the MS2 BasEd SaMple VectOrization (MEMO) method
+#
+# The dataset is constitued of 2 fecal samples, 1 tomato sample and 1 plasma sample, plus different
+# binary/quaternary mixtures of these four samples. Samples were profiled in UHPLC-MS/MS (Q-Exactive spectrometer)
+# using 2 different LC-methods. Each sample was acquired in triplicates using each LC-method (see Qemistree paper for details).
 # %% [markdown]
 # ## First we import the needed packages
-# Be sure to have first installed memo using 'pip install memo' within the memo environment. 
+# Be sure to have first installed memo using 'pip install memo' within the memo environment.
 # Also make sure to launch this notebook using the memo conda environement.
 
 # %%
@@ -28,30 +31,40 @@ fake_parameter = 'foo'
 # %%
 
 def conditions(df_meta):
-    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
+    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)  \
+        & (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
         return 'Fecal_1'
-    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
+    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0) \
+        & (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
         return 'Fecal_2'
-    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
+    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0) \
+        & (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
         return 'Tomato'
-    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
+    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0) \
+        & (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
         return 'Plasma'
-    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
+    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']>0) \
+        & (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
         return 'Fecal_1 + Fecal_2'
-    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
+    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0) \
+        & (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
         return 'Fecal_1 + Tomato'
-    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
+    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)
+        & (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
         return 'Fecal_1 + Plasma'
-    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
+    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0) \
+        & (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
         return 'Fecal_2 + Tomato'
-    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
+    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0) \
+        & (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
         return 'Fecal_2 + Plasma'
-    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
+    if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0) \
+        & (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
         return 'Tomato + Plasma'
-    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
-        return 'Fecal_1 + Fecal_2 + Tomato + Plasma' 
-    else:
-        return 'What is it? :)'
+    if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']>0) \
+        & (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
+        return 'Fecal_1 + Fecal_2 + Tomato + Plasma'
+    return 'What is it? :)'
 
 
 df_meta = pd.read_csv("data/1901_gradient_benchmarking_dataset_v4_sample_metadata.txt", sep='\t')
@@ -82,7 +95,7 @@ spectra_qe.document
 
 # %% [markdown]
 # ## Generation of MEMO matrix
-# 
+#
 # Using the generated documents and the quant table, we can now obtain the MEMO matrix. The MEMO matrix is stored in the MemoContainer object, along with the feature table and the documents
 
 # %%
@@ -97,7 +110,7 @@ memo_qe.filtered_memo_matrix
 
 # %% [markdown]
 # ## Plotting
-# 
+#
 # We can now use the MEMO matrix to generate the PCoA of our samples
 
 # %%
@@ -160,7 +173,7 @@ memo.plot_hca(
 # ## Merge MEMO matrix from different MzMine projects
 # %% [markdown]
 # First, we load as before the spectra and feature matrix to generate the memo matrix of the different projects to merge.
-# 
+#
 # In this case, we will once again use the Qemistree dataset and compare for the same samples data aquired on a QToF with some on a Q-Exactive (Orbitrap).
 
 # %%
@@ -211,7 +224,6 @@ memo.plot_pcoa_2d(
 # But when looking at component 2 and 3, we see that it is possible to cluster chemically related samples using this approach.
 
 # %%
-
 memo.plot_pcoa_2d(
     matrix= memo_merged.memo_matrix,
     df_metadata=df_meta,
@@ -222,9 +234,3 @@ memo.plot_pcoa_2d(
     scaling= False,
     pc_to_plot = [2,3]
 )
-
-
-# %%
-
-
-

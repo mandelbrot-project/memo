@@ -3,7 +3,7 @@ from collections import Counter
 from spec2vec import SpectrumDocument
 import pandas as pd
 import numpy as np
-import memo_ms.import_data as import_data
+from memo_ms import import_data
 from tqdm import tqdm
 import os
 
@@ -74,7 +74,6 @@ class FeatureTable:
 class MemoContainer:
     """Create an empty MemoContainer dataclass object
     """
-
     def memo_from_aligned_samples(self, featuretable, spectradocuments) -> pd.DataFrame:
         """
         Use a featuretable and a spectradocuments to generate a MEMO matrix.
@@ -113,7 +112,8 @@ class MemoContainer:
         memo_matrix.fillna(0, inplace=True)
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
-        return None
+        self.filtered_memo_matrix = None
+        self.filtered_feature_matrix = None
 
     def memo_from_unaligned_samples(self, path_to_samples_dir, min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
@@ -131,6 +131,7 @@ class MemoContainer:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
+        #pylint: disable=too-many-arguments
         dic_memo = {}
         mgf_file = []
         for file in os.listdir(path_to_samples_dir):
@@ -150,7 +151,6 @@ class MemoContainer:
             dic_memo[file.removesuffix('.mgf')] = documents
 
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
-        return None
 
     def filter_matrix(self, matrix_to_use, samples_pattern, max_occurence):
         """Filter a feature table or a MEMO matrix: remove samples matching samples_pattern
@@ -194,7 +194,6 @@ class MemoContainer:
             self.filtered_feature_matrix = table_filtered
         elif matrix_to_use == 'filtered_feature_matrix':
             self.filtered_feature_matrix = table_filtered
-        return None
 
     def merge_memo(self, memocontainer2, left, right, drop_not_in_common=False):
         """Merge 2 MEMO matrix
@@ -209,7 +208,7 @@ class MemoContainer:
         """
         output = MemoContainer()
 
-        if type(memocontainer2) != MemoContainer:
+        if not isinstance(memocontainer2, MemoContainer):
             raise TypeError ("merge_memo() MemoContainer argument must be a MemoContainer")
 
         if left == 'memo_matrix':
@@ -226,7 +225,7 @@ class MemoContainer:
         else:
             raise ValueError('Invalid right value: choose one of [memo_matrix, filtered_memo_matrix]')
 
-        if drop_not_in_common == True:
+        if drop_not_in_common is True:
             result = table_left.append(table_right, sort=False).dropna(axis='columns').fillna(0)
         else:
             result = table_left.append(table_right, sort=False).fillna(0)
@@ -245,23 +244,20 @@ class MemoContainer:
             None
         """
         if table == 'memo_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No memo_matrix to export')
             self.memo_matrix.to_csv(path, sep=sep)
         elif table == 'feature_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No feature_matrix to export')
             self.feature_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_memo_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No filtered_memo_matrix to export')
             self.filtered_memo_matrix.to_csv(path, sep=sep)
         elif table == 'filtered_feature_matrix':
-            if self.memo_matrix == None:
+            if self.memo_matrix is None:
                 raise ValueError('No filtered_feature_matrix to export')
             self.filtered_feature_matrix.to_csv(path, sep=sep)
         if table not in ['memo_matrix', 'feature_matrix', 'filtered_memo_matrix', 'filtered_feature_matrix']:
             raise ValueError('Invalid table value: choose one of [memo_matrix, feature_matrix, filtered_memo_matrix, filtered_feature_matrix]')
-
-        return None
-

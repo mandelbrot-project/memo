@@ -1,11 +1,19 @@
+import os
+from setuptools import find_packages
 from setuptools import setup
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+version = {}
+with open(os.path.join(here, "memo_ms", "__version__.py")) as f:
+    exec(f.read(), version)
 
 def readme():
     with open('README.md') as f:
         return f.read()
 
 setup(name='memo_ms',
-      version='0.0.4',
+      version=version["__version__"],
       description='Python package to perform MS2 Based Sample Vectorization and visualization',
       long_description=readme(),
       url='https://github.com/mandelbrot-project/memo',
@@ -16,7 +24,7 @@ setup(name='memo_ms',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent'
       ],
-      packages=['memo_ms'],
+      packages=find_packages(exclude=['*tests*']),
       python_requires=">=3.8",
       install_requires=[
           'ipykernel',

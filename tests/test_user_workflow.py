@@ -6,43 +6,30 @@ import memo_ms as memo
 import numpy as np
 import os
 import pandas as pd
-import plotly.express as px
+# import plotly.express as px
 import pytest
 
 
 PATH_ROOT = os.path.dirname(os.path.dirname((__file__)))
 PATH_TEST_RESOURCES = os.path.join(PATH_ROOT, 'data')
 
+
 @pytest.mark.integtest
 def test_workflow():
-    fake_parameter = 'foo'
-
     def conditions(df_meta):
-        if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
-            return 'Fecal_1'
-        if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
-            return 'Fecal_2'
-        if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
-            return 'Tomato'
-        if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
-            return 'Plasma'
-        if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
-            return 'Fecal_1 + Fecal_2'
-        if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
-            return 'Fecal_1 + Tomato'
-        if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
-            return 'Fecal_1 + Plasma'
-        if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']==0)):
-            return 'Fecal_2 + Tomato'
-        if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']==0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
-            return 'Fecal_2 + Plasma'
-        if ((df_meta['Proportion_Fecal_1']==0) & (df_meta['Proportion_Fecal_2']==0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
-            return 'Tomato + Plasma'
-        if ((df_meta['Proportion_Fecal_1']>0) & (df_meta['Proportion_Fecal_2']>0)& (df_meta['Proportion_Tomato']>0) & (df_meta['Proportion_NIST_1950_SRM']>0)):
-            return 'Fecal_1 + Fecal_2 + Tomato + Plasma' 
-        else:
-            return 'What is it? :)'
+        return_strings = []
+        if df_meta['Proportion_Fecal_1'] > 0:
+            return_strings.append("Fecal_1")
+        if df_meta['Proportion_Fecal_2'] > 0:
+            return_strings.append("Fecal_2")
+        if df_meta['Proportion_Tomato'] > 0:
+            return_strings.append("Tomato")
+        if df_meta['Proportion_NIST_1950_SRM'] > 0:
+            return_strings.append("Plasma")
 
+        if len(return_strings) > 0:
+            return " + ".join(return_strings)
+        return 'What is it? :)'
 
     metadata_filename = os.path.join(PATH_TEST_RESOURCES, "1901_gradient_benchmarking_dataset_v4_sample_metadata.txt")
     df_meta = pd.read_csv(metadata_filename, sep='\t')
@@ -52,7 +39,7 @@ def test_workflow():
     df_meta['contains'] = df_meta.apply(conditions, axis=1)
     df_meta['instrument'] = np.where(df_meta['Samplename'].str.contains('qTOF'), 'qTOF', 'QE')
     df_meta['blank_qc'] = np.where(df_meta['Samplename'].str.contains('blank|qcmix', case = False), 'yes', 'no')
-    df_meta
+    print(df_meta)
 
     # Import feature_quant table
     # To compute the MEMO matrix of the dataset, we need the table reporting presence/absence of each metabolite in each sample. This information is in the quant table and we create a memo.FeatureTable dataclass object to load it.
@@ -64,10 +51,12 @@ def test_workflow():
     # Import spectra
     # Since MEMO relies on the occurence of MS2 fragments/losses in samples to compare them, we obviously need to importthe features' fragmentation spectra. Losses are computed and spectra translated into documents. Store in memo.SpectraDocuments dataclass object.
 
+    """ Commented out to save test run time... (for now)
     specs_filename = os.path.join(PATH_TEST_RESOURCES, "qemistree_specs_ms.mgf")
     spectra_qe = memo.SpectraDocuments(path=specs_filename, min_relative_intensity = 0.01,
                 max_relative_intensity = 1, min_peaks_required=5, losses_from = 10, losses_to = 200, n_decimals = 2)
     spectra_qe.document
+    """
 
     # Generation of MEMO matrix
     # 

@@ -31,7 +31,7 @@ jobs:
       - name: Run test with coverage
         run: pytest --cov --cov-report term --cov-report xml
       - name: Check style against standards using prospector
-        run: prospector -o grouped -o pylint:pylint-report.txt
+        run: prospector -i tutorial -o grouped -o pylint:pylint-report.txt
 
   basic_checks:
     name: Basic code checks / python-${{ matrix.python-version }} / ${{ matrix.os }}
