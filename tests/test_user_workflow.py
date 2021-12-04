@@ -45,8 +45,8 @@ def test_workflow():
     # To compute the MEMO matrix of the dataset, we need the table reporting presence/absence of each metabolite in each sample. This information is in the quant table and we create a memo.FeatureTable dataclass object to load it.
 
     table_filename = os.path.join(PATH_TEST_RESOURCES, "quantification_table-00000.csv")
-    feat_table_qe = memo.FeatureTable(path=table_filename)
-    feat_table_qe.quant_table
+    feat_table_qe = memo.FeatureTable(path=table_filename, software="mzmine")
+    feat_table_qe.feature_table
 
     # Import spectra
     # Since MEMO relies on the occurence of MS2 fragments/losses in samples to compare them, we obviously need to importthe features' fragmentation spectra. Losses are computed and spectra translated into documents. Store in memo.SpectraDocuments dataclass object.

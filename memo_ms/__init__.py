@@ -3,7 +3,7 @@ from . import visualization
 from .__version__ import __version__
 from .classes import SpectraDocuments
 from .classes import FeatureTable
-from .classes import MemoContainer
+from .classes import MemoMatrix
 
 
 __all__ = [
@@ -12,5 +12,5 @@ __all__ = [
     "visualization",
     "SpectraDocuments",
     "FeatureTable",
-    "MemoContainer"
+    "MemoMatrix"
 ]
