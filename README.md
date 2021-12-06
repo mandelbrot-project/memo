@@ -90,6 +90,7 @@ Then install dependencies and memo:
 python -m pip install --upgrade pip
 pip install numpy
 pip install --editable .[dev]
+# pip install -e .'[dev]' (on mac)
 ```
 
 #### Run tests
