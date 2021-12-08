@@ -1,5 +1,8 @@
-# memo
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI_Build.yml)
+![GitHub](https://img.shields.io/github/license/mandelbrot-project/memo)
+![PyPI](https://img.shields.io/pypi/v/memo-ms)
 
+# memo
 **M**s2 bas**E**d sa**M**ple vect**O**rization (**MEMO**) package
 
 ## Description
