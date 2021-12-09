@@ -1,0 +1,45 @@
+name: Pypi verify
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test scenario tags'
+
+jobs:
+  verify:
+    name: Verify memo-ms package on ${{ matrix.os }} / python-${{ matrix.python-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        python-version: ["3.8"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v1
+      - name: Python info
+        run: |
+          which python
+          python --version
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy
+          pip install memo-ms
+      - name: Show pip list
+        run: |
+          pip list
+      - name: Install pytest
+        run: |
+          pip install pytest
+      - name: Run tests
+        shell: bash -l {0}
+        run: |
+          export TESTDIR=$RUNNER_TEMP/memo/_test
+          [ "$RUNNING_OS" = "Windows" ] && export TESTDIR=$RUNNER_TEMP\\memo\\_test\\
+          mkdir -p $TESTDIR
+          cp -iRv tests integration-tests $TESTDIR
+          cd $TESTDIR
+          pytest --ignore="tests/test_user_workflow.py"
