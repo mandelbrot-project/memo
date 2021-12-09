@@ -1,4 +1,4 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI_Build.yml)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build)
 ![GitHub](https://img.shields.io/github/license/mandelbrot-project/memo)
 [![PyPI](https://img.shields.io/pypi/v/memo-ms)](https://pypi.org/project/memo-ms/)
 
