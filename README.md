@@ -1,6 +1,6 @@
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build)
-![GitHub](https://img.shields.io/github/license/mandelbrot-project/memo)
-[![PyPI](https://img.shields.io/pypi/v/memo-ms)](https://pypi.org/project/memo-ms/)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build)](https://github.com/mandelbrot-project/memo/actions)
+![GitHub](https://img.shields.io/github/license/mandelbrot-project/memo?color=blue)
+[![PyPI](https://img.shields.io/pypi/v/memo_ms?color=blue)](https://pypi.org/project/memo-ms/)
 
 # memo
 **M**s2 bas**E**d sa**M**ple vect**O**rization (**MEMO**) package
