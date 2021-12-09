@@ -37,40 +37,42 @@ MEMO is mainly built on [matchms](https://github.com/matchms/matchms) and [spec2
 
 First make sure to have [anaconda](https://www.anaconda.com/products/individual) installed.
 
-#### A) Clone and install locally
-A.1. First clone the repository using git clone in command line:
+#### A) Using pip install
+
+A.1. Create a new conda environment to avoid clashes:
+```
+conda create --name memo python=3.8
+conda activate memo
+```
+A.2. Install with pip:
+```
+pip install numpy
+pip install memo-ms
+```
+
+If you have an error, try insstalling scikit-bio from conda-forge before installing the package with pip:
+```
+conda install -c conda-forge scikit-bio
+pip install memo-ms
+```
+
+You can clone the repository to get the demo spectra and quant table files!
+
+#### B) Clone and install locally
+B.1. First clone the repository using git clone in command line:
 ```
 git clone <ssh_key or https>
 ```
-A.2. Create a new conda environment to avoid clashes:
+B.2. Create a new conda environment to avoid clashes:
 ```
 conda create --name memo python
 conda activate memo
 ```
 
-A.3. Install the package locally using pip:
+B.3. Install the package locally using pip:
 ```
 pip install .
 ```
-#### B) Using test.pypi (Not recommended for now!)
-
-B.1. Create a new conda environment to avoid clashes:
-```
-conda create --name memo python=3.8
-conda activate memo
-```
-B.2. Install with pip from test.pypi (experimental):
-```
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
-```
-
-If you have an error, try instllaing scikit-bio from conda-forge before installing the package with pip:
-```
-conda install -c conda-forge scikit-bio
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ memo-ms
-```
-
-You can clone the repository to get the demo spectra and quant table files!
 
 #### Enjoy!
 
