@@ -1,13 +1,13 @@
 |GitHub Workflow Status| |GitHub| |PyPI|
 
 MEMO
-====
+===============
 
 **M**\ s2 bas\ **E**\ d sa\ **M**\ ple vect\ **O**\ rization (**MEMO**)
 package
 
 Description
------------
+-----------------
 
 MEMO is a method allowing a Retention Time (RT) agnostic alignment of
 metabolomics samples using the fragmentation spectra (MS2) of their
@@ -26,7 +26,7 @@ the MS2 spectra and convert them into documents. Huge thanks to them for
 the amazing work done with these packages!
 
 Examples
------------
+------------------
 
 Different examples of application and comparison to other MS/MS based metrics are avalable `here`_ and notebooks are available on `GitHub`_
 
@@ -36,12 +36,12 @@ Publication
 To add
 
 To install it:
------------
+-------------------------
 
 First make sure to have `anaconda`_ installed.
 
 A) Using pip install
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A.1. Create a new conda environment to avoid clashes:
 
@@ -69,7 +69,7 @@ You can clone the repository to get the demo spectra and quant table
 files!
 
 B) Clone and install locally
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 B.1. First clone the repository using git clone in command line:
 
@@ -91,13 +91,13 @@ B.3. Install the package locally using pip
    pip install .
    
 C) Test it using the Tutorial notebook
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Documentation for developers
-----------------------------
+----------------------------------
 
 Installation
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create an environment with
 
@@ -118,7 +118,7 @@ Then install dependencies and memo:
    # pip install -e .'[dev]' (on mac)
 
 Run tests
-^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Memo tests can be run by:
 
