@@ -26,7 +26,7 @@ setup(name='memo_ms',
         'Operating System :: OS Independent'
       ],
       packages=find_packages(exclude=['*tests*']),
-      python_requires=">=3.8",
+      python_requires=">=3.7",
       install_requires=[
           'ipykernel',
           'pandas',
