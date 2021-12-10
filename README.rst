@@ -140,6 +140,7 @@ And the code linter with
 .. _anaconda: https://www.anaconda.com/products/individual
 
 .. |GitHub Workflow Status| image:: https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build
+   :target: https://github.com/mandelbrot-project/memo/actions
 .. |GitHub| image:: https://img.shields.io/github/license/mandelbrot-project/memo?color=blue
 .. |PyPI| image:: https://img.shields.io/pypi/v/memo_ms?color=blue)
    :target: https://pypi.org/project/memo-ms/
