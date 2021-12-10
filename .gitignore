@@ -128,7 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# pma local garbage 
+# vscode
 
-data/local
-*local*
+.vscode
