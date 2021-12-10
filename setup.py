@@ -9,7 +9,7 @@ with open(os.path.join(here, "memo_ms", "__version__.py")) as f:
     exec(f.read(), version)
 
 def readme():
-    with open('README.md') as f:
+    with open('README.rst') as f:
         return f.read()
 
 setup(name='memo_ms',
