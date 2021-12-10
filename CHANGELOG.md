@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Chang required python version from >3.8 to >3.7
+- Changed required python version from >3.8 to >3.7
 
 ## [0.1.0] - 2021-12-06
 
