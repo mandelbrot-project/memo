@@ -19,7 +19,7 @@ blanks for example) and visualization techniques (MDS/PCoA, TMAP,
 Heatmap, ...) can be used. MEMO suits particularly well to compare chemodiverse samples, ie with a
 poor features overlap, or to compare samples with a strong RT shift,
 acquired using different LC methods or even different mass spectrometers
-technology (Maxiis qToF vs Q-Exactive).
+technology (Maxiis Q-ToF vs Q-Exactive).
 
 MEMO is mainly built on `matchms`_ and `spec2vec`_ packages for handling
 the MS2 spectra and convert them into documents. Huge thanks to them for
