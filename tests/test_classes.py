@@ -30,7 +30,6 @@ def test_spectra_documents():
     assert spectra.document.documents[2][-1] == "peak@445.11", \
         "Expected differnt word in document"
 
-
 def test_spectra_documents_changed_decimals():
     filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename,
@@ -41,7 +40,6 @@ def test_spectra_documents_changed_decimals():
         "Expected differnt word in document"
     assert spectra.document.documents[2][-1] == "peak@445.114", \
         "Expected differnt word in document"
-
 
 def test_spectra_documents_no_losses():
     filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
@@ -87,7 +85,6 @@ def test_memo_matrix_exceptions():
     with pytest.raises(TypeError, match=r"spectradocuments argument must be of type SpectraDocuments"):
         container.memo_from_aligned_samples(table, "something")
 
-
 def test_memo_matrix_from_aligned():
     container = memo.MemoMatrix()
     filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
@@ -99,6 +96,7 @@ def test_memo_matrix_from_aligned():
     assert container.memo_matrix.iloc[2,13] == 1.0, "Expected different value"
     assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (171, 122), \
         "Expected different table shape after filtering"
+    container.memo_from_aligned_samples(table, spectra)
     assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (171, 0), \
         "Expected different table shape after filtering with max_occurence = 0"    
         
@@ -110,5 +108,6 @@ def test_memo_matrix_from_unaligned():
     assert container.memo_matrix.iloc[2,1233] == 2.0, "Expected different value"
     assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (4, 12643), \
         "Expected different table shape after filtering"
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
     assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (4, 12274), \
         "Expected different table shape after filtering with max_occurence = 0"
