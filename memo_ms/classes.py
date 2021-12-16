@@ -6,7 +6,7 @@ import numpy as np
 from memo_ms import import_data
 from tqdm import tqdm
 import os
-
+import copy
 
 def filter_table(table, samples_pattern, max_occurence = None):
     
@@ -80,7 +80,7 @@ class FeatureTable:
 
     Args:
         path (str): Path to a feature table file (.csv)
-        software (str): One of [mzmine, xcms, msdial]: the software used for feature detection
+        software (str): One of [mzmine, xcms, msdial, memo]: the software used for feature detection.
 
     Returns:
         self.feature_table (DataFrame): A cleaned feature quantification table
@@ -96,6 +96,8 @@ class FeatureTable:
             self.feature_table = import_data.import_xcms_quant_table(path = self.path)
         elif self.software == 'msdial':
             self.feature_table = import_data.import_msdial_quant_table(path = self.path)
+        elif self.software == 'memo':
+            self.feature_table = import_data.import_memo_quant_table(path = self.path)
         else:
             raise ValueError("software argument missing, choose one of the currently supported pre-processing softwares: [mzmine, xcms, msdial]")
         
@@ -110,8 +112,9 @@ class FeatureTable:
         Returns:
             self.filtered_feature_table (DataFrame): A filtered feature table
         """
-        self.feature_table = filter_table(self.feature_table, samples_pattern, max_occurence)            
-        return self
+        output = copy.deepcopy(self)
+        output.feature_table = filter_table(output.feature_table, samples_pattern, max_occurence)            
+        return output
     
     def export_matrix(self, path, sep = ','):
         """Export a given matrix
@@ -165,8 +168,6 @@ class MemoMatrix:
         memo_matrix.fillna(0, inplace=True)
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
-        self.filtered_memo_matrix = None
-        self.filtered_feature_matrix = None
 
     def memo_from_unaligned_samples(self, path_to_samples_dir, min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
@@ -200,7 +201,7 @@ class MemoMatrix:
             documents = list(doc.words for doc in documents)
             documents = [item for sublist in documents for item in sublist]
             documents = dict(Counter(documents))
-            dic_memo[file.removesuffix('.mgf')] = documents
+            dic_memo[file.replace('.mgf', '')] = documents
 
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
 
@@ -213,10 +214,11 @@ class MemoMatrix:
             max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
 
         Returns:
-            self.filtered_memo_matrix (DataFrame): A filtered feature table matrix
+            self.memo_matrix (DataFrame): A filtered feature table matrix
         """
-        self.memo_matrix = filter_table(self.memo_matrix, samples_pattern, max_occurence)        
-        return self
+        output = copy.deepcopy(self)
+        output.memo_matrix = filter_table(output.memo_matrix, samples_pattern, max_occurence)        
+        return output
 
     def merge_memo(self, memomatrix_2, drop_not_in_common=False):
         """Merge 2 MEMO matrix

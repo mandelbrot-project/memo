@@ -82,3 +82,17 @@ def import_xcms_quant_table(path) -> pd.DataFrame:
     quant_table.index.name = 'filename'
     quant_table.columns.name = 'feature_id'
     return quant_table
+
+def import_memo_quant_table(path) -> pd.DataFrame:
+    """Import feature quantification table memo ready
+
+    Args:
+        path (str): Path to feature quantification table
+
+    Returns:
+        quant_table (DataFrame): A cleaned feature quantification table
+    """
+    quant_table = pd.read_csv(path, sep=',', index_col=0)
+    quant_table = quant_table.transpose()
+    quant_table.index.name = 'filename'
+    return quant_table

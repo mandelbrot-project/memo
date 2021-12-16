@@ -30,7 +30,6 @@ def test_spectra_documents():
     assert spectra.document.documents[2][-1] == "peak@445.11", \
         "Expected differnt word in document"
 
-
 def test_spectra_documents_changed_decimals():
     filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename,
@@ -41,7 +40,6 @@ def test_spectra_documents_changed_decimals():
         "Expected differnt word in document"
     assert spectra.document.documents[2][-1] == "peak@445.114", \
         "Expected differnt word in document"
-
 
 def test_spectra_documents_no_losses():
     filename = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
@@ -56,9 +54,8 @@ def test_spectra_documents_no_losses():
     assert "loss" not in [x.split("@")[0] for x in spectra.document.documents[1]], \
         "Expected no losses."
 
-
-def test_feature_table():
-    filename = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+def test_feature_table_mzmmine():
+    filename = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
     table = memo.FeatureTable(filename, software="mzmine")
     assert table.feature_table.shape == (198, 3), "Expected different table shape"
     assert table.feature_table.index[0] == "QEC18_Blank_resusp_20181227024429.mzML", \
@@ -67,6 +64,12 @@ def test_feature_table():
     np.testing.assert_almost_equal(table.feature_table.to_numpy()[0, :],
                                    expected_first_row, decimal=0)
 
+def test_feature_table_memo():
+    filename = os.path.join(PATH_TEST_RESOURCES, "test_table_clean.csv")
+    table = memo.FeatureTable(filename, software="memo")
+    assert table.feature_table.shape == (198, 3), "Expected different table shape"
+    assert table.feature_table.index[0] == "QEC18_Blank_resusp_20181227024429.mzML", \
+        "Expected different filename in table index"
 
 def test_memo_matrix_exceptions():
     container = memo.MemoMatrix()
@@ -77,17 +80,55 @@ def test_memo_matrix_exceptions():
     with pytest.raises(TypeError, match=r"featuretable argument must be of type FeatureTable"):
         container.memo_from_aligned_samples("something", "something")
 
-    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
     table = memo.FeatureTable(filename_table, software="mzmine")
     with pytest.raises(TypeError, match=r"spectradocuments argument must be of type SpectraDocuments"):
         container.memo_from_aligned_samples(table, "something")
 
-
-def test_memo_matrix():
+def test_memo_matrix_from_aligned():
     container = memo.MemoMatrix()
-    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
     filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename_spectra)
     table = memo.FeatureTable(filename_table, software="mzmine")
     container.memo_from_aligned_samples(table, spectra)
-    # TODO: add usefull tests -> what is expected for container.memo_matrix etc.
+    assert container.memo_matrix.shape == (198, 122), "Expected different table shape"
+    assert container.memo_matrix.iloc[2,13] == 1.0, "Expected different value"
+    assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (171, 122), \
+        "Expected different table shape after filtering"    
+    assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (171, 0), \
+        "Expected different table shape after filtering with max_occurence = 0"    
+        
+def test_memo_matrix_from_unaligned():
+    container = memo.MemoMatrix()
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    assert container.memo_matrix.shape == (5, 12842), "Expected different table shape"
+    assert set(container.memo_matrix.index) == set(['QEC18_NIST','QEC18_F1', 'QEC18_F2', 'QEC18_To', 'QEC18_blank_SPE']), \
+        "Expected different index"
+
+def test_memo_matrix_from_unaligned_filter():
+    container = memo.MemoMatrix()
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (4, 12643), \
+        "Expected different table shape after filtering"
+
+def test_memo_matrix_from_unaligned_filter_max_occ():
+    container = memo.MemoMatrix()
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (4, 12274), \
+        "Expected different table shape after filtering"
+
+def test_merge():
+    container = memo.MemoMatrix()
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
+    filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
+    spectra = memo.SpectraDocuments(filename_spectra)
+    table = memo.FeatureTable(filename_table, software="mzmine")
+    container.memo_from_aligned_samples(table, spectra)
+    
+    container2 = memo.MemoMatrix()
+    container2.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    
+    merge = container.merge_memo(container2)
+    assert merge.memo_matrix.shape == (203, 12849), "Expected different table shape"
+    
