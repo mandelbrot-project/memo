@@ -1,4 +1,4 @@
-|GitHub Workflow Status| |GitHub| |PyPI|
+|GitHub Workflow Status| |GitHub| |PyPI| |Docs|
 
 MEMO
 ===============
@@ -144,4 +144,6 @@ And the code linter with
 .. |GitHub| image:: https://img.shields.io/github/license/mandelbrot-project/memo?color=blue
 .. |PyPI| image:: https://img.shields.io/pypi/v/memo_ms?color=blue)
    :target: https://pypi.org/project/memo-ms/
-  
+.. |Docs| image:: https://readthedocs.org/projects/memo-docs/badge/?version=stable
+   :target: https://memo-docs.readthedocs.io/en/stable/?badge=stable
+   :alt: Documentation Status
