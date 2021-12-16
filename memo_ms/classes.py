@@ -6,6 +6,7 @@ import numpy as np
 from memo_ms import import_data
 from tqdm import tqdm
 import os
+import copy
 
 def filter_table(table, samples_pattern, max_occurence = None):
     
@@ -111,7 +112,7 @@ class FeatureTable:
         Returns:
             self.filtered_feature_table (DataFrame): A filtered feature table
         """
-        output = self
+        output = copy.deepcopy(self)
         output.feature_table = filter_table(output.feature_table, samples_pattern, max_occurence)            
         return output
     
@@ -215,7 +216,7 @@ class MemoMatrix:
         Returns:
             self.memo_matrix (DataFrame): A filtered feature table matrix
         """
-        output = self
+        output = copy.deepcopy(self)
         output.memo_matrix = filter_table(output.memo_matrix, samples_pattern, max_occurence)        
         return output
 
