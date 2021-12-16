@@ -7,7 +7,6 @@ from memo_ms import import_data
 from tqdm import tqdm
 import os
 
-
 def filter_table(table, samples_pattern, max_occurence = None):
     
     table_matched = table[table.index.str.contains(samples_pattern, case = False)]
@@ -112,7 +111,7 @@ class FeatureTable:
         Returns:
             self.filtered_feature_table (DataFrame): A filtered feature table
         """
-        output = self.copy()
+        output = self
         output.feature_table = filter_table(output.feature_table, samples_pattern, max_occurence)            
         return output
     
@@ -216,7 +215,7 @@ class MemoMatrix:
         Returns:
             self.memo_matrix (DataFrame): A filtered feature table matrix
         """
-        output = self.copy()
+        output = self
         output.memo_matrix = filter_table(output.memo_matrix, samples_pattern, max_occurence)        
         return output
 
