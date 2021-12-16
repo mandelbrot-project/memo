@@ -57,7 +57,7 @@ def test_spectra_documents_no_losses():
         "Expected no losses."
 
 def test_feature_table_mzmmine():
-    filename = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    filename = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
     table = memo.FeatureTable(filename, software="mzmine")
     assert table.feature_table.shape == (198, 3), "Expected different table shape"
     assert table.feature_table.index[0] == "QEC18_Blank_resusp_20181227024429.mzML", \
@@ -82,7 +82,7 @@ def test_memo_matrix_exceptions():
     with pytest.raises(TypeError, match=r"featuretable argument must be of type FeatureTable"):
         container.memo_from_aligned_samples("something", "something")
 
-    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
     table = memo.FeatureTable(filename_table, software="mzmine")
     with pytest.raises(TypeError, match=r"spectradocuments argument must be of type SpectraDocuments"):
         container.memo_from_aligned_samples(table, "something")
@@ -90,7 +90,7 @@ def test_memo_matrix_exceptions():
 
 def test_memo_matrix_from_aligned():
     container = memo.MemoMatrix()
-    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
     filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename_spectra)
     table = memo.FeatureTable(filename_table, software="mzmine")
