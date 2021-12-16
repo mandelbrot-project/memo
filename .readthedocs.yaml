@@ -14,12 +14,7 @@ build:
     # nodejs: "16"
     # rust: "1.55"
     # golang: "1.17"
-    
-    name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install numpy
-        pip install -e .[dev]
+
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
