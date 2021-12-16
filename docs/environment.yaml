@@ -1,0 +1,18 @@
+name: memo_docs
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - anaconda
+dependencies:
+  - python==3.7
+  - numpy
+  - pandas
+  - scipy
+  - umap-learn
+  - plotly
+  - pip
+  - pip :
+    - memo_ms
+    - datatable
+    - scikit-bio
