@@ -1,4 +1,4 @@
-name: memo_docs
+name: memodocs
 channels:
   - conda-forge
   - bioconda
