@@ -11,6 +11,7 @@ dependencies:
   - scipy
   - umap-learn
   - plotly
+  - sphinxcontrib-apidoc
   - pip
   - pip :
     - memo_ms
