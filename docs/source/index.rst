@@ -7,9 +7,10 @@ Welcome to memo's documentation!
 ================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
+   API <api/memo.rst>
 
 
 Indices and tables
