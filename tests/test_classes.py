@@ -103,7 +103,8 @@ def test_memo_matrix_from_unaligned():
     container = memo.MemoMatrix()
     container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
     assert container.memo_matrix.shape == (5, 12842), "Expected different table shape"
-    assert container.memo_matrix.index[2] == 'QEC18_F2', "Expected different filename in table index"
+    assert set(container.memo_matrix.index) == set(['QEC18_NIST','QEC18_F1', 'QEC18_F2', 'QEC18_To', 'QEC18_blank_SPE']), \
+        "Expected different index"
 
 def test_memo_matrix_from_unaligned_filter():
     container = memo.MemoMatrix()
