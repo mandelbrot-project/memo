@@ -96,7 +96,7 @@ def test_memo_matrix_from_aligned():
     assert container.memo_matrix.iloc[2,13] == 1.0, "Expected different value"
     assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (171, 122), \
         "Expected different table shape after filtering"
-    container.memo_from_aligned_samples(table, spectra)
+    
     assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (171, 0), \
         "Expected different table shape after filtering with max_occurence = 0"    
         
@@ -105,9 +105,30 @@ def test_memo_matrix_from_unaligned():
     container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
     assert container.memo_matrix.shape == (5, 12842), "Expected different table shape"
     assert container.memo_matrix.index[2] == 'QEC18_F2', "Expected different filename in table index"
-    assert container.memo_matrix.iloc[2,1233] == 2.0, "Expected different value"
+
+def test_memo_matrix_from_unaligned_filter():
+    container = memo.MemoMatrix()
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
     assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (4, 12643), \
         "Expected different table shape after filtering"
+
+def test_memo_matrix_from_unaligned_filter_max_occ():
+    container = memo.MemoMatrix()
     container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
     assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (4, 12274), \
-        "Expected different table shape after filtering with max_occurence = 0"
+        "Expected different table shape after filtering"
+
+def test_merge():
+    container = memo.MemoMatrix()
+    filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")
+    filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
+    spectra = memo.SpectraDocuments(filename_spectra)
+    table = memo.FeatureTable(filename_table, software="mzmine")
+    container.memo_from_aligned_samples(table, spectra)
+    
+    container2 = memo.MemoMatrix()
+    container2.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    
+    merge = container.merge_memo(container2)
+    assert merge.memo_matrix.shape == (203, 12849), "Expected different table shape"
+    
