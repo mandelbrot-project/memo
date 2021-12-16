@@ -1,4 +1,4 @@
-name: memodocs
+name: memo_examples_env
 channels:
   - conda-forge
   - bioconda
