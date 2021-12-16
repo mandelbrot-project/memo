@@ -112,8 +112,9 @@ class FeatureTable:
         Returns:
             self.filtered_feature_table (DataFrame): A filtered feature table
         """
-        self.feature_table = filter_table(self.feature_table, samples_pattern, max_occurence)            
-        return self
+        output = self.copy()
+        output.feature_table = filter_table(output.feature_table, samples_pattern, max_occurence)            
+        return output
     
     def export_matrix(self, path, sep = ','):
         """Export a given matrix
@@ -167,8 +168,6 @@ class MemoMatrix:
         memo_matrix.fillna(0, inplace=True)
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
-        self.filtered_memo_matrix = None
-        self.filtered_feature_matrix = None
 
     def memo_from_unaligned_samples(self, path_to_samples_dir, min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
@@ -215,10 +214,11 @@ class MemoMatrix:
             max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
 
         Returns:
-            self.filtered_memo_matrix (DataFrame): A filtered feature table matrix
+            self.memo_matrix (DataFrame): A filtered feature table matrix
         """
-        self.memo_matrix = filter_table(self.memo_matrix, samples_pattern, max_occurence)        
-        return self
+        output = self.copy()
+        output.memo_matrix = filter_table(output.memo_matrix, samples_pattern, max_occurence)        
+        return output
 
     def merge_memo(self, memomatrix_2, drop_not_in_common=False):
         """Merge 2 MEMO matrix
