@@ -6,7 +6,7 @@
 version: 2
 
 conda:
-  environment: docs/environment.yaml
+  file: docs/environment.yaml
 
 # Set the version of Python and other tools you might need
 build:
