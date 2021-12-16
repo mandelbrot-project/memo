@@ -56,8 +56,7 @@ def test_spectra_documents_no_losses():
     assert "loss" not in [x.split("@")[0] for x in spectra.document.documents[1]], \
         "Expected no losses."
 
-
-def test_feature_table():
+def test_feature_table_mzmmine():
     filename = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
     table = memo.FeatureTable(filename, software="mzmine")
     assert table.feature_table.shape == (198, 3), "Expected different table shape"
@@ -67,6 +66,12 @@ def test_feature_table():
     np.testing.assert_almost_equal(table.feature_table.to_numpy()[0, :],
                                    expected_first_row, decimal=0)
 
+def test_feature_table_memo():
+    filename = os.path.join(PATH_TEST_RESOURCES, "test_table_clean.csv")
+    table = memo.FeatureTable(filename, software="memo")
+    assert table.feature_table.shape == (198, 3), "Expected different table shape"
+    assert table.feature_table.index[0] == "QEC18_Blank_resusp_20181227024429.mzML", \
+        "Expected different filename in table index"
 
 def test_memo_matrix_exceptions():
     container = memo.MemoMatrix()
@@ -83,11 +88,27 @@ def test_memo_matrix_exceptions():
         container.memo_from_aligned_samples(table, "something")
 
 
-def test_memo_matrix():
+def test_memo_matrix_from_aligned():
     container = memo.MemoMatrix()
     filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table.csv")
     filename_spectra = os.path.join(PATH_TEST_RESOURCES, "test_spectra.mgf")
     spectra = memo.SpectraDocuments(filename_spectra)
     table = memo.FeatureTable(filename_table, software="mzmine")
     container.memo_from_aligned_samples(table, spectra)
-    # TODO: add usefull tests -> what is expected for container.memo_matrix etc.
+    assert container.memo_matrix.shape == (198, 122), "Expected different table shape"
+    assert container.memo_matrix.iloc[2,13] == 1.0, "Expected different value"
+    assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (171, 122), \
+        "Expected different table shape after filtering"
+    assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (171, 0), \
+        "Expected different table shape after filtering with max_occurence = 0"    
+        
+def test_memo_matrix_from_unaligned():
+    container = memo.MemoMatrix()
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    assert container.memo_matrix.shape == (5, 12842), "Expected different table shape"
+    assert container.memo_matrix.index[2] == 'QEC18_F2', "Expected different filename in table index"
+    assert container.memo_matrix.iloc[2,1233] == 2.0, "Expected different value"
+    assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (4, 12643), \
+        "Expected different table shape after filtering"
+    assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (4, 12274), \
+        "Expected different table shape after filtering with max_occurence = 0"
