@@ -25,7 +25,10 @@ sphinx:
 #    - pdf
 
 # Optionally declare the Python requirements required to build your docs
-python:
-   install:
-   - requirements: docs/environment.yaml
+# python:
+#    install:
+#    - requirements: docs/environment.yaml
    
+
+conda:
+  file: docs/environment.yaml
