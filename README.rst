@@ -140,7 +140,7 @@ MEMO is licensed under the GNU General Public License v3.0. Permissions of this 
 .. _spec2vec: https://github.com/iomega/spec2vec
 .. _here: https://mandelbrot-project.github.io/memo_publication_examples/
 .. _GitHub: https://github.com/mandelbrot-project/memo_publication_examples
-.. _readthedocs:  https://memo-docs.readthedocs.io/en/latest/index.html#
+.. _readthedocs: https://memo-docs.readthedocs.io/en/latest/index.html#
 .. _anaconda: https://www.anaconda.com/products/individual
 
 .. |GitHub Workflow Status| image:: https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build
