@@ -63,7 +63,7 @@ You can clone the Github package repository to get the demo files and the tutori
 Examples
 ------------------
 
-Different examples of application and comparison to other MS/MS based metrics are avalable `here`_ and notebooks are available on `GitHub`_.
+Different examples of application and comparison to other MS/MS based metrics are available `here`_ and the corresponding notebooks are available on `GitHub`_.
 
 Indices and tables
 ==================
