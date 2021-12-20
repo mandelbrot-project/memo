@@ -23,7 +23,7 @@ technology (Maxiis Q-ToF vs Q-Exactive).
 
 Documentation
 ------------------
-For documentation, see our `readthedocs`_. Different examples of application and comparison to other MS/MS based metrics are avalable `here`_ and notebooks are available on `GitHub`_.
+For documentation, see our `readthedocs`_. Different examples of application and comparison to other MS/MS based metrics are available `here`_ and the corresponding notebooks are available on `GitHub`_.
 
 Publication
 -----------
