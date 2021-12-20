@@ -21,19 +21,17 @@ poor features overlap, or to compare samples with a strong RT shift,
 acquired using different LC methods or even different mass spectrometers
 technology (Maxiis Q-ToF vs Q-Exactive).
 
-MEMO is mainly built on `matchms`_ and `spec2vec`_ packages for handling
-the MS2 spectra and convert them into documents. Huge thanks to them for
-the amazing work done with these packages!
-
-Examples
+Documentation
 ------------------
-
-Different examples of application and comparison to other MS/MS based metrics are avalable `here`_ and notebooks are available on `GitHub`_
+For documentation, see our `readthedocs`_. Different examples of application and comparison to other MS/MS based metrics are avalable `here`_ and notebooks are available on `GitHub`_.
 
 Publication
 -----------
 
-To add
+If you use MEMO, please cite the following papers:
+   - MEMO (not published yet)
+   - Huber, Florian, Stefan Verhoeven, Christiaan Meijer, Hanno Spreeuw, Efraín Castilla, Cunliang Geng, Justin van der Hooft, et al. 2020. “Matchms - Processing and Similarity Evaluation of Mass Spectrometry Data.” Journal of Open Source Software 5 (52): 2411. https://doi.org/10.21105/joss.02411 
+   - Huber, Florian, Lars Ridder, Stefan Verhoeven, Jurriaan H. Spaaks, Faruk Diblen, Simon Rogers, and Justin J. J. van der Hooft. 2021. “Spec2Vec: Improved Mass Spectral Similarity Scoring through Learning of Structural Relationships.” PLoS Computational Biology 17 (2): e1008724. https://doi.org/10.1371/journal.pcbi.1008724
 
 To install it:
 -------------------------
@@ -132,11 +130,17 @@ And the code linter with
 
    prospector
 
+License
+-----------
+
+MEMO is licensed under the GNU General Public License v3.0. Permissions of this strong copyleft license are conditioned on making available complete source code of licensed works and modifications, which include larger works using a licensed work, under the same license. Copyright and license notices must be preserved. Contributors provide an express grant of patent rights.
+
 .. _Qemistree Evaluation Dataset: https://www.nature.com/articles/s41589-020-00677-3
 .. _matchms: https://github.com/matchms/matchms
 .. _spec2vec: https://github.com/iomega/spec2vec
 .. _here: https://mandelbrot-project.github.io/memo_publication_examples/
 .. _GitHub: https://github.com/mandelbrot-project/memo_publication_examples
+.. _readthedocs:  https://memo-docs.readthedocs.io/en/latest/index.html#
 .. _anaconda: https://www.anaconda.com/products/individual
 
 .. |GitHub Workflow Status| image:: https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build
