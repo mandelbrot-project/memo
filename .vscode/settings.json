@@ -2,5 +2,6 @@
     "python.pythonPath": "/opt/anaconda3/envs/memo/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.linting.flake8Enabled": false
+    "python.linting.flake8Enabled": false,
+    "restructuredtext.confPath": "${workspaceFolder}\\docs\\source"
 }

@@ -75,7 +75,7 @@ B.1. First clone the repository using git clone in command line:
 
 .. code-block:: console
 
-   git clone <ssh_key or https>
+   git clone https://github.com/mandelbrot-project/memo.git # or ssh
 
 B.2. Create a new conda environment to avoid clashes:
 
