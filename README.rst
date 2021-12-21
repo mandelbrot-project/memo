@@ -2,14 +2,15 @@
 
 MEMO
 ===============
-
-**M**\ s2 bas\ **E**\ d sa\ **M**\ ple vect\ **O**\ rization (**MEMO**)
-package
+.. image:: https://github.com/mandelbrot-project/memo_publication_examples/blob/main/docs/memo_logo.jpg
+   :width: 200 px
+   :align: right
 
 Description
 -----------------
 
-MEMO is a method allowing a Retention Time (RT) agnostic alignment of
+**M**\ s2 bas\ **E**\ d sa\ **M**\ ple vect\ **O**\ rization (**MEMO**)
+is a method allowing a Retention Time (RT) agnostic alignment of
 metabolomics samples using the fragmentation spectra (MS2) of their
 consituents. The occurence of MS2 peaks and neutral losses (to the precursor) in each sample is counted
 and used to generate an *MS2 fingerprint* of the sample. These
