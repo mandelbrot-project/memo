@@ -34,7 +34,7 @@ If you use MEMO, please cite the following papers:
    - Huber, Florian, Stefan Verhoeven, Christiaan Meijer, Hanno Spreeuw, Efraín Castilla, Cunliang Geng, Justin van der Hooft, et al. 2020. “Matchms - Processing and Similarity Evaluation of Mass Spectrometry Data.” Journal of Open Source Software 5 (52): 2411. https://doi.org/10.21105/joss.02411 
    - Huber, Florian, Lars Ridder, Stefan Verhoeven, Jurriaan H. Spaaks, Faruk Diblen, Simon Rogers, and Justin J. J. van der Hooft. 2021. “Spec2Vec: Improved Mass Spectral Similarity Scoring through Learning of Structural Relationships.” PLoS Computational Biology 17 (2): e1008724. https://doi.org/10.1371/journal.pcbi.1008724
 
-To install it:
+Installation :
 -------------------------
 
 First make sure to have `anaconda`_ installed.
@@ -67,8 +67,8 @@ installing the package with pip:
 You can clone the repository to get the demo spectra and quant table
 files!
 
-B) Clone and install locally
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+B) Alternatively: clone and install locally
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 B.1. First clone the repository using git clone in command line:
 
@@ -89,8 +89,11 @@ B.3. Install the package locally using pip
 
    pip install .
    
-C) Test it using the Tutorial notebook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Run example notebook
+-----------------------------------
+
+It is located in the `tutorial folder`_
+   
 
 Documentation for developers
 ----------------------------------
@@ -143,6 +146,8 @@ MEMO is licensed under the GNU General Public License v3.0. Permissions of this 
 .. _GitHub: https://github.com/mandelbrot-project/memo_publication_examples
 .. _readthedocs: https://memo-docs.readthedocs.io/en/latest/index.html#
 .. _anaconda: https://www.anaconda.com/products/individual
+.. _`tutorial folder`: https://github.com/mandelbrot-project/memo/blob/b14409a545aa499992b92c3eb9445405ceba9a78/tutorial/tutorial_memo.ipynb
+
 
 .. |GitHub Workflow Status| image:: https://img.shields.io/github/workflow/status/mandelbrot-project/memo/CI%20Build
    :target: https://github.com/mandelbrot-project/memo/actions
