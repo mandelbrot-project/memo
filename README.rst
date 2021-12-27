@@ -93,6 +93,8 @@ Run example notebook
 -----------------------------------
 
 It is located in the `tutorial folder`_
+
+You can also find a list of notebook to reproduce results of the MEMO paper. The repo is over there https://github.com/mandelbrot-project/memo_publication_examples
    
 
 Documentation for developers
