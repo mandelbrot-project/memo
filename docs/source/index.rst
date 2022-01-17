@@ -17,24 +17,24 @@ Description
 
 MEMO is a method allowing a Retention Time (RT) agnostic alignment of
 metabolomics samples using the fragmentation spectra (MS2) of their
-consituents. The occurence of MS2 peaks and neutral losses (to the precursor) in each sample is counted
+constituents. The occurrence of MS2 peaks and neutral losses (to the precursor) in each sample is counted
 and used to generate an *MS2 fingerprint* of the sample. These
 fingerprints can in a second stage be aligned to compare different
 samples. Once obtained, different filtering (remove peaks/losses from
 blanks for example) and visualization techniques (MDS/PCoA, TMAP,
-Heatmap, ...) can be used. MEMO suits particularly well to compare chemodiverse samples, ie with a
+Heatmap, ...) can be used. MEMO suits particularly well to compare chemodiverse samples, *i.e.* with a
 poor features overlap, or to compare samples with a strong RT shift,
 acquired using different LC methods or even different mass spectrometers
-technology (Maxiis Q-ToF vs Q-Exactive).
+technology (MaXis Q-ToF vs Q-Exactive).
 
 MEMO is mainly built on `matchms`_ and `spec2vec`_ packages for handling
-the MS2 spectra and convert them into documents. Huge thanks to them for
+the MS2 spectra and converting them into documents. Huge thanks to them for
 the amazing work done with these packages!
 
 To install it:
 -------------------------
 
-First make sure to have `anaconda`_ installed.
+First, make sure to have `anaconda`_ installed.
 
 1. Create a new conda environment to avoid clashes:
 
@@ -50,7 +50,7 @@ First make sure to have `anaconda`_ installed.
    pip install numpy
    pip install memo-ms
 
-If you have an error, try insstalling scikit-bio from conda-forge before
+If you have an error, try installing scikit-bio from conda-forge before
 installing the package with pip:
 
 .. code-block:: console
@@ -63,7 +63,7 @@ You can clone the Github package repository to get the demo files and the tutori
 Examples
 ------------------
 
-Different examples of application and comparison to other MS/MS based metrics are available `here`_ and the corresponding notebooks are available on `GitHub`_.
+Different examples of application and comparison to other MS/MS-based metrics are available `here`_ and the corresponding notebooks are available on `GitHub`_.
 
 Indices and tables
 ==================
