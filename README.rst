@@ -39,8 +39,8 @@ Installation :
 
 First make sure to have `anaconda`_ installed.
 
-A) Using pip install
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A) Recommended: using pip install
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A.1. Create a new conda environment to avoid clashes:
 
@@ -56,16 +56,32 @@ A.2. Install with pip:
    pip install numpy
    pip install memo-ms
 
-If you have an error, try insstalling scikit-bio from conda-forge before
-installing the package with pip:
+If you have an error, try installing scikit-bio from conda-forge (available for Mac and Linux users) or pip (for Windows users) before
+installing the package with pip. For Windows users, you will need to install C++ build tools (download here: https://visualstudio.microsoft.com/visual-cpp-build-tools/, see this answer for help https://stackoverflow.com/a/50210015):
 
 .. code-block:: console
 
    conda install -c conda-forge scikit-bio
+   # or for Windows user
+   pip install scikit-bio
    pip install memo-ms
 
 You can clone the repository to get the demo spectra and quant table
-files!
+files and test the package using the Tutorial notebook!
+
+NB: If you have this error when loading the memo package:
+
+.. code-block:: console
+
+   ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
+
+Uninstall and reinstall scikit-bio with no dependencies using this command:
+
+.. code-block:: console
+
+   pip uninstall scikit-bio
+   pip install scikit-bio --no-cache-dir --no-binary :all:
+
 
 B) Alternatively: clone and install locally
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -80,7 +96,7 @@ B.2. Create a new conda environment to avoid clashes:
 
 .. code-block:: console
 
-   conda create --name memo python
+   conda create --name memo python=3.8
    conda activate memo
 
 B.3. Install the package locally using pip
