@@ -87,7 +87,8 @@ def import_memo_quant_table(path) -> pd.DataFrame:
     """Import feature quantification table memo ready
 
     Args:
-        path (str): Path to feature quantification table
+        path (str): Path to a MEMO ready feature quantification table: a csv file (sep = ",") with feature as rows and samples as columns.
+The first column must contain feature's ID and the header must be "feature_id". 
 
     Returns:
         quant_table (DataFrame): A cleaned feature quantification table
