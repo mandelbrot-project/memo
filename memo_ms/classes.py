@@ -169,7 +169,7 @@ class MemoMatrix:
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
 
-#pylint: disable=too-many-arguments
+    #pylint: disable=too-many-arguments
     def memo_from_unaligned_samples(self, path_to_samples_dir, pattern_to_match = '.mgf', min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
         """Generate a Memo matrix from a list of individual .mgf files
@@ -187,7 +187,7 @@ class MemoMatrix:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
-#pylint: enable=too-many-arguments
+        #pylint: enable=too-many-arguments
                    
         dic_memo = {}
         mgf_file = []
