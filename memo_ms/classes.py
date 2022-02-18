@@ -169,6 +169,7 @@ class MemoMatrix:
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
 
+#pylint: disable=too-many-arguments
     def memo_from_unaligned_samples(self, path_to_samples_dir, pattern_to_match = '.mgf', min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
         """Generate a Memo matrix from a list of individual .mgf files
@@ -186,18 +187,18 @@ class MemoMatrix:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
-        #pylint: disable=too-many-arguments
+#pylint: enable=too-many-arguments
                    
         dic_memo = {}
         mgf_file = []
         path_to_mg_file = []
         
-        for (root, dirs, files) in os.walk(path_to_samples_dir, topdown=True):
-            for file in files:
-               if file.endswith(pattern_to_match):
-                   path_to_match_file = os.path.join(root, file)
-                   path_to_mg_file.append(path_to_match_file)
-                   mgf_file.append(file)
+        for (root, _, files) in os.walk(path_to_samples_dir, topdown=True):
+            for file in files:                
+                if file.endswith(pattern_to_match):
+                    path_to_match_file = os.path.join(root, file)
+                    path_to_mg_file.append(path_to_match_file)
+                    mgf_file.append(file)
 
         for path, file in tqdm(zip(path_to_mg_file, mgf_file), total=len(path_to_mg_file)):
             spectra = import_data.load_and_filter_from_mgf(
