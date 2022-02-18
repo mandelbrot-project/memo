@@ -191,7 +191,7 @@ class MemoMatrix:
         dic_memo = {}
         mgf_file = []
         
-        for (root, files) in os.walk(path_to_samples_dir, topdown=True):
+        for (root, dirs, files) in os.walk(path_to_samples_dir, topdown=True):
             for file in files:
                if file.endswith(pattern_to_match):
                    path_to_match_file = os.path.join(root, file)
