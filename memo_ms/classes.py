@@ -187,7 +187,8 @@ class MemoMatrix:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
         #pylint: disable=too-many-arguments
-                   
+        #pylint: disable=too-many-locals
+                  
         dic_memo = {}
         mgf_file = []
         path_to_mg_file = []
