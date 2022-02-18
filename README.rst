@@ -20,7 +20,7 @@ blanks for example) and visualization techniques (MDS/PCoA, TMAP,
 Heatmap, ...) can be used. MEMO suits particularly well to compare chemodiverse samples, ie with a
 poor features overlap, or to compare samples with a strong RT shift,
 acquired using different LC methods or even different mass spectrometers
-technology (Maxiis Q-ToF vs Q-Exactive).
+technology (Maxiis Q-ToF vs Q-Exactive Orbitrap).
 
 Documentation
 ------------------
