@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Filtering option to filter peaks/losses present in more/less thant N percent of samples [#25](https://github.com/mandelbrot-project/memo/issues/25)
+- Possibility to build memo_from_unaligned() from files matching pattern even if in subfolders
 
 ### Changed
 
