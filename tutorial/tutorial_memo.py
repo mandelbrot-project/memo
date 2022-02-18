@@ -94,8 +94,8 @@ memo_qe.memo_from_aligned_samples(feat_table_qe, spectra_qe)
 memo_qe.memo_matrix
 
 # %%
-memo_qe = memo_qe.filter(samples_pattern='blank')
-feat_table_qe = feat_table_qe.filter(samples_pattern='blank')
+memo_qe = memo_qe.filter(use_samples_pattern=True, samples_pattern='blank')
+feat_table_qe = feat_table_qe.filter(use_samples_pattern=True, samples_pattern='blank')
 memo_qe.memo_matrix
 
 # %% [markdown]
@@ -186,8 +186,8 @@ memo_qtof = memo.MemoMatrix()
 memo_qtof.memo_from_aligned_samples(feat_table_qtof, spectra_qtof)
 
 # %%
-memo_qe = memo_qe.filter(samples_pattern='blank')
-memo_qtof = memo_qtof.filter(samples_pattern='blank')
+memo_qe = memo_qe.filter(use_samples_pattern=True,samples_pattern='blank')
+memo_qtof = memo_qtof.filter(use_samples_pattern=True,samples_pattern='blank')
 
 # %% [markdown]
 # Now, let's merge our 2 MEMO matrix. There is one paramater, drop_not_in_common, to decide wether to keep only shared peaks/losses or all of them.

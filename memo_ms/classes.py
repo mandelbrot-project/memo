@@ -117,8 +117,11 @@ class FeatureTable:
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
         Args:
+            use_samples_pattern (bool): filter using a str pattern
             samples_pattern (str): the str pattern to match in samples to filter
-            max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
+            max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature
+            min_rel_occurence (float): remove features contained in less than (min_rel_occurence * 100) percent of the samples
+            max_rel_occurence (float): remove features contained in more than (max_rel_occurence * 100) percent of the samples
 
         Returns:
             self.filtered_feature_table (DataFrame): A filtered feature table
@@ -229,8 +232,11 @@ class MemoMatrix:
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
         Args:
+            use_samples_pattern (bool): filter using a str pattern
             samples_pattern (str): the str pattern to match in samples to filter
-            max_occurence (int): maximal number of occurence allowed in matched samples before removing a feature/word
+            max_occurence (int): maximal number of occurence allowed in matched samples before removing a word
+            min_rel_occurence (float): remove words contained in less than (min_rel_occurence * 100 percent) of the samples
+            max_rel_occurence (float): remove words contained in more than (max_rel_occurence * 100 percent) of the samples
 
         Returns:
             self.memo_matrix (DataFrame): A filtered feature table matrix
