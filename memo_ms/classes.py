@@ -190,16 +190,18 @@ class MemoMatrix:
                    
         dic_memo = {}
         mgf_file = []
+        path_to_mg_file = []
         
         for (root, dirs, files) in os.walk(path_to_samples_dir, topdown=True):
             for file in files:
                if file.endswith(pattern_to_match):
                    path_to_match_file = os.path.join(root, file)
-                   mgf_file.append(path_to_match_file)
+                   path_to_mg_file.append(path_to_match_file)
+                   mgf_file.append(file)
 
-        for file in tqdm(mgf_file):
+        for path in tqdm(path_to_mg_file):
             spectra = import_data.load_and_filter_from_mgf(
-                path = file, min_relative_intensity = min_relative_intensity,
+                path = path, min_relative_intensity = min_relative_intensity,
                 max_relative_intensity = max_relative_intensity, loss_mz_from = losses_from, loss_mz_to = losses_to, n_required = min_peaks_required
                 )
 
