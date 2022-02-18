@@ -33,6 +33,7 @@ def filter_table(table, use_samples_pattern = False, samples_pattern = '', max_o
         max_rel = max_rel_occurence*len_table
         table_filtered = table_filtered.loc[:, table_filtered.count(axis=0) <= max_rel]
         table_filtered = table_filtered.loc[:, table_filtered.count(axis=0) >= min_rel]
+        table_filtered = table_filtered.fillna(0).astype(float)
     
     return table_filtered
         
