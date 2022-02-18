@@ -169,12 +169,13 @@ class MemoMatrix:
         memo_matrix.index.name = 'filename'
         self.memo_matrix = memo_matrix
 
-    def memo_from_unaligned_samples(self, path_to_samples_dir, min_relative_intensity = 0.01,
+    def memo_from_unaligned_samples(self, path_to_samples_dir, pattern_to_match = '.mgf', min_relative_intensity = 0.01,
     max_relative_intensity = 1.00, min_peaks_required = 10, losses_from = 10, losses_to = 200, n_decimals = 2):
         """Generate a Memo matrix from a list of individual .mgf files
 
         Args:
-            path_to_samples_dir (str): Path to the directory where individual .mgf files are gathered
+            path_to_samples_dir (str): Path to the directory where individual .mgf files are gathered. Subfolders will also be checked.
+            pattern_to_match (str): Shared pattern between all spectra files to input. Will be removed in memo_matrix.index.
             min_relative_intensity (float): Minimal relative intensity to keep a peak
             max_relative_intensity (float): Maximal relative intensity to keep a peak
             min_peaks_required (int): Minimum number of peaks to keep a spectrum
@@ -186,14 +187,19 @@ class MemoMatrix:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
         #pylint: disable=too-many-arguments
+                   
         dic_memo = {}
         mgf_file = []
-        for file in os.listdir(path_to_samples_dir):
-            if file.endswith(".mgf"):
-                mgf_file.append(file)
+        
+        for (root, files) in os.walk(path_to_samples_dir, topdown=True):
+            for file in files:
+               if file.endswith(pattern_to_match):
+                   path_to_match_file = os.path.join(root, file)
+                   mgf_file.append(path_to_match_file)
+
         for file in tqdm(mgf_file):
             spectra = import_data.load_and_filter_from_mgf(
-                path = os.path.join(path_to_samples_dir, file), min_relative_intensity = min_relative_intensity,
+                path = file, min_relative_intensity = min_relative_intensity,
                 max_relative_intensity = max_relative_intensity, loss_mz_from = losses_from, loss_mz_to = losses_to, n_required = min_peaks_required
                 )
 
@@ -201,7 +207,7 @@ class MemoMatrix:
             documents = list(doc.words for doc in documents)
             documents = [item for sublist in documents for item in sublist]
             documents = dict(Counter(documents))
-            dic_memo[file.replace('.mgf', '')] = documents
+            dic_memo[file.replace(pattern_to_match, '')] = documents
 
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
 
