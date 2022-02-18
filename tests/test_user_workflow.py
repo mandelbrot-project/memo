@@ -47,7 +47,6 @@ def test_workflow():
     table_filename = os.path.join(PATH_TEST_RESOURCES, "quantification_table-00000.csv")
     feat_table_qe = memo.FeatureTable(path=table_filename, software="mzmine")
     feat_table_qe.feature_table
-
     assert feat_table_qe.feature_table.shape == (198, 7032), \
         "Expected different table shape after filtering"
     # Import spectra
@@ -56,8 +55,7 @@ def test_workflow():
     specs_filename = os.path.join(PATH_TEST_RESOURCES, "qemistree_specs_ms.mgf")
     spectra_qe = memo.SpectraDocuments(path=specs_filename, min_relative_intensity = 0.01,
                 max_relative_intensity = 1, min_peaks_required=5, losses_from = 10, losses_to = 200, n_decimals = 2)
-    spectra_qe.document
-    
+    spectra_qe.document    
     assert spectra_qe.document.shape == (6569, 6), \
         "Expected different table shape after filtering"
 
@@ -65,22 +63,19 @@ def test_workflow():
     # Using the generated documents and the quant table, we can now obtain the MEMO matrix. The MEMO matrix is stored in the MemoContainer object, along with the feature table and the documents
     memo_qe = memo.MemoMatrix()
     memo_qe.memo_from_aligned_samples(feat_table_qe, spectra_qe)
-    memo_qe.memo_matrix
-    
+    memo_qe.memo_matrix    
     assert memo_qe.memo_matrix.shape == (198, 30324), \
         "Expected different table shape after filtering"
 
-    memo_qe = memo_qe.filter(use_samples_pattern =True, samples_pattern='blank')
-    
+    memo_qe = memo_qe.filter(use_samples_pattern =True, samples_pattern='blank')    
     assert memo_qe.memo_matrix.shape == (171, 30324), \
         "Expected different table shape after filtering"
-    feat_table_qe = feat_table_qe.filter(use_samples_pattern = True, samples_pattern='blank')
-    
-    assert memo_qe.memo_matrix.shape == (171, 7032), \
+        
+    feat_table_qe = feat_table_qe.filter(use_samples_pattern = True, samples_pattern='blank')    
+    assert feat_table_qe.feature_table.shape == (171, 7032), \
         "Expected different table shape after filtering"
     
-    memo_qe = memo_qe.filter(use_samples_pattern = False, max_rel_occurence=0.8, min_rel_occurence=0.2)
-    
+    memo_qe = memo_qe.filter(use_samples_pattern = False, max_rel_occurence=0.8, min_rel_occurence=0.2)    
     assert memo_qe.memo_matrix.shape == (171, 11666), \
         "Expected different table shape after filtering"
     
