@@ -8,25 +8,35 @@ from tqdm import tqdm
 import os
 import copy
 
-def filter_table(table, samples_pattern, max_occurence = None):
+#pylint: disable=too-many-arguments
+def filter_table(table, use_samples_pattern = False, samples_pattern = '', max_occurence = None, min_rel_occurence = 0, max_rel_occurence = 1):
     
-    table_matched = table[table.index.str.contains(samples_pattern, case = False)]
-    matched_samples = list(table_matched.index)
-    table_matched = table_matched.loc[:, (table_matched != 0).any(axis=0)]
-    count_null = table_matched.replace(0, np.nan).isnull().sum()
-    
-    if max_occurence is not None:
-        excluded_features = count_null[count_null < (len(table_matched)-max_occurence)].index
-        table_filtered = table.drop(excluded_features, axis=1)
-    else: 
-        table_filtered = table
-    
-    table_filtered = table_filtered.drop(matched_samples, axis=0)
-    table_filtered = table_filtered.astype(float)
-    table_filtered = table_filtered.loc[:, (table_filtered != 0).any(axis=0)]
+    if use_samples_pattern:
+        table_matched = table[table.index.str.contains(samples_pattern, case = False)]
+        matched_samples = list(table_matched.index)
+        table_matched = table_matched.loc[:, (table_matched != 0).any(axis=0)]
+        count_null = table_matched.replace(0, np.nan).isnull().sum()
+        
+        if max_occurence is not None:
+            excluded_features = count_null[count_null < (len(table_matched)-max_occurence)].index
+            table_filtered = table.drop(excluded_features, axis=1)
+        else: 
+            table_filtered = table
+        
+        table_filtered = table_filtered.drop(matched_samples, axis=0)
+        table_filtered = table_filtered.astype(float)
+        table_filtered = table_filtered.loc[:, (table_filtered != 0).any(axis=0)]    
+    else:
+        table_filtered = table.replace(0, np.nan)
+        len_table = len(table_filtered)
+        min_rel = min_rel_occurence*len_table
+        max_rel = max_rel_occurence*len_table
+        table_filtered = table_filtered.loc[:, table_filtered.count(axis=0) <= max_rel]
+        table_filtered = table_filtered.loc[:, table_filtered.count(axis=0) >= min_rel]
     
     return table_filtered
-    
+        
+           
 @dataclass
 class SpectraDocuments:
     """Create a SpectraDocuments dataclass object containing spectra documents and metadata
@@ -101,7 +111,7 @@ class FeatureTable:
         else:
             raise ValueError("software argument missing, choose one of the currently supported pre-processing softwares: [mzmine, xcms, msdial]")
         
-    def filter(self, samples_pattern, max_occurence = None):
+    def filter(self, use_samples_pattern = False, samples_pattern = '', max_occurence = None, min_rel_occurence = 0, max_rel_occurence = 1):
         """Filter a feature table: remove samples matching samples_pattern
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
@@ -113,7 +123,7 @@ class FeatureTable:
             self.filtered_feature_table (DataFrame): A filtered feature table
         """
         output = copy.deepcopy(self)
-        output.feature_table = filter_table(output.feature_table, samples_pattern, max_occurence)            
+        output.feature_table = filter_table(output.feature_table, use_samples_pattern, samples_pattern, max_occurence, min_rel_occurence, max_rel_occurence)            
         return output
     
     def export_matrix(self, path, sep = ','):
@@ -186,7 +196,6 @@ class MemoMatrix:
         Returns:
             self.memo_matrix (DataFrame): A MEMO matrix
         """
-        #pylint: disable=too-many-arguments
         #pylint: disable=too-many-locals
                   
         dic_memo = {}
@@ -214,7 +223,7 @@ class MemoMatrix:
 
         self.memo_matrix = pd.DataFrame.from_dict(dic_memo, orient='index').fillna(0)
 
-    def filter(self, samples_pattern, max_occurence = None):
+    def filter(self, use_samples_pattern = False, samples_pattern = '', max_occurence = None, min_rel_occurence = 0, max_rel_occurence = 1):
         """Filter a MEMO matrix: remove samples matching samples_pattern
         AND remove features occuring in more than n = max_occurence samples matched by samples_pattern
 
@@ -226,7 +235,7 @@ class MemoMatrix:
             self.memo_matrix (DataFrame): A filtered feature table matrix
         """
         output = copy.deepcopy(self)
-        output.memo_matrix = filter_table(output.memo_matrix, samples_pattern, max_occurence)        
+        output.memo_matrix = filter_table(output.memo_matrix, use_samples_pattern, samples_pattern, max_occurence, min_rel_occurence, max_rel_occurence)        
         return output
 
     def merge_memo(self, memomatrix_2, drop_not_in_common=False):
