@@ -94,9 +94,9 @@ def test_memo_matrix_from_aligned():
     container.memo_from_aligned_samples(table, spectra)
     assert container.memo_matrix.shape == (198, 122), "Expected different table shape"
     assert container.memo_matrix.iloc[2,13] == 1.0, "Expected different value"
-    assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (171, 122), \
+    assert container.filter(use_samples_pattern = True, samples_pattern= 'blank').memo_matrix.shape == (171, 122), \
         "Expected different table shape after filtering"    
-    assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (171, 0), \
+    assert container.filter(use_samples_pattern = True, samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (171, 0), \
         "Expected different table shape after filtering with max_occurence = 0"    
         
 def test_memo_matrix_from_unaligned():
@@ -109,15 +109,21 @@ def test_memo_matrix_from_unaligned():
 def test_memo_matrix_from_unaligned_filter():
     container = memo.MemoMatrix()
     container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
-    assert container.filter(samples_pattern= 'blank').memo_matrix.shape == (4, 12643), \
+    assert container.filter(use_samples_pattern = True, samples_pattern= 'blank').memo_matrix.shape == (4, 12643), \
         "Expected different table shape after filtering"
 
 def test_memo_matrix_from_unaligned_filter_max_occ():
     container = memo.MemoMatrix()
     container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
-    assert container.filter(samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (4, 12274), \
+    assert container.filter(use_samples_pattern = True, samples_pattern= 'blank', max_occurence=0).memo_matrix.shape == (4, 12274), \
         "Expected different table shape after filtering"
 
+def test_memo_matrix_from_unaligned_filter_rel_occ():
+    container = memo.MemoMatrix()
+    container.memo_from_unaligned_samples(os.path.join(PATH_TEST_RESOURCES, "test_mgf_unaligned"))
+    assert container.filter(use_samples_pattern = False, min_rel_occurence = 0.4, max_rel_occurence = 0.8).memo_matrix.shape == (5, 3246), \
+        "Expected different table shape after filtering"
+        
 def test_merge():
     container = memo.MemoMatrix()
     filename_table = os.path.join(PATH_TEST_RESOURCES, "test_table_mzmine.csv")

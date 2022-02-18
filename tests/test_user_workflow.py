@@ -47,27 +47,35 @@ def test_workflow():
     table_filename = os.path.join(PATH_TEST_RESOURCES, "quantification_table-00000.csv")
     feat_table_qe = memo.FeatureTable(path=table_filename, software="mzmine")
     feat_table_qe.feature_table
-
+    assert feat_table_qe.feature_table.shape == (198, 7032), \
+        "Expected different table shape after filtering"
     # Import spectra
     # Since MEMO relies on the occurence of MS2 fragments/losses in samples to compare them, we obviously need to importthe features' fragmentation spectra. Losses are computed and spectra translated into documents. Store in memo.SpectraDocuments dataclass object.
 
-    """ Commented out to save test run time... (for now)
     specs_filename = os.path.join(PATH_TEST_RESOURCES, "qemistree_specs_ms.mgf")
     spectra_qe = memo.SpectraDocuments(path=specs_filename, min_relative_intensity = 0.01,
                 max_relative_intensity = 1, min_peaks_required=5, losses_from = 10, losses_to = 200, n_decimals = 2)
-    spectra_qe.document
-    """
+    spectra_qe.document    
+    assert spectra_qe.document.shape == (6569, 6), \
+        "Expected different table shape after filtering"
 
     # Generation of MEMO matrix
-    # 
     # Using the generated documents and the quant table, we can now obtain the MEMO matrix. The MEMO matrix is stored in the MemoContainer object, along with the feature table and the documents
+    memo_qe = memo.MemoMatrix()
+    memo_qe.memo_from_aligned_samples(feat_table_qe, spectra_qe)
+    memo_qe.memo_matrix    
+    assert memo_qe.memo_matrix.shape == (198, 30324), \
+        "Expected different table shape after filtering"
 
-    # The following code didn't work TODO: Looks like class is not expecting the given inputs
-    # memo_qe = memo.MemoContainer(feat_table_qe, spectra_qe)
-    # memo_qe.memo_matrix
-
-    # memo_qe.filter_matrix(matrix_to_use='memo_matrix', samples_pattern='blank', max_occurence=100)
-    # memo_qe.filter_matrix(matrix_to_use='feature_matrix', samples_pattern='blank', max_occurence=100)
-    # memo_qe.filtered_memo_matrix
-
-    # TODO: add asserts to check results
+    memo_qe = memo_qe.filter(use_samples_pattern =True, samples_pattern='blank')    
+    assert memo_qe.memo_matrix.shape == (171, 30324), \
+        "Expected different table shape after filtering"
+        
+    feat_table_qe = feat_table_qe.filter(use_samples_pattern = True, samples_pattern='blank')    
+    assert feat_table_qe.feature_table.shape == (171, 7032), \
+        "Expected different table shape after filtering"
+    
+    memo_qe = memo_qe.filter(use_samples_pattern = False, max_rel_occurence=0.8, min_rel_occurence=0.2)    
+    assert memo_qe.memo_matrix.shape == (171, 11666), \
+        "Expected different table shape after filtering"
+    
