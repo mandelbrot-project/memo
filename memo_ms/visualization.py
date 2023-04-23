@@ -241,12 +241,7 @@ def plot_heatmap(
             y = dendro_leaves,
             z = heat_data,
             colorscale = 'YlOrRd',
-            colorbar=dict(
-                title="Distance",
-                len= 0.4,
-                y= 0.2,
-                ypad = 5
-            ),
+            colorbar={"title": 'Distance', "len": 0.4, "y": 0.2, "ypad": 5},
             reversescale = True,
         )
     ]
@@ -333,11 +328,7 @@ def plot_heatmap(
         if (not trace['name'] in labels_to_show_in_legend):
             trace['showlegend'] = False
 
-    fig.update_layout(legend=dict(
-        orientation="v",
-        y = 1,
-        x = 1
-    ))
+    fig.update_layout(legend={"orientation": 'v', "y": 1, "x": 1})
 
     fig.update_xaxes(tickangle=45)
     fig.show()
