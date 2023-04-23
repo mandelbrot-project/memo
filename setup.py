@@ -37,7 +37,9 @@ setup(name='memo_ms',
           'plotly >= 4.14.3',
           'cimcb-lite >= 1.0.2',
           'scikit-bio >= 0.5.6', 
-          'scikit-learn >= 0.24.1'
+          'scikit-learn >= 0.24.1',
+          'bokeh == 1.4.0',
+          'jinja2 == 3.0.3'
       ],
       extras_require={"dev": ["isort>=4.2.5,<5",
                             "prospector[with_pyroma]",
