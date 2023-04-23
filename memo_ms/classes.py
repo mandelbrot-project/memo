@@ -210,7 +210,6 @@ class MemoMatrix:
         for (root, _, files) in os.walk(path_to_samples_dir, topdown=True):
             for file in files:                
                 if file.endswith(pattern_to_match) and file not in files_counted:
-                # if file.endswith(pattern_to_match):
                     files_counted.add(file)
                     path_to_match_file = os.path.join(root, file)
                     path_to_mg_file.append(path_to_match_file)
