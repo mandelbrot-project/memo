@@ -36,7 +36,7 @@ setup(name='memo_ms',
           'spec2vec >= 0.4',
           'plotly >= 4.14.3',
           'cimcb-lite >= 1.0.2',
-          'scikit-bio == 0.5.6', 
+          'scikit-bio == 0.5.7', 
           'scikit-learn >= 0.24.1',
           'bokeh == 1.4.0',
           'jinja2 == 3.0.3'
