@@ -59,8 +59,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install numpy
-          pip install conda
-          conda install -c conda-forge scikit-bio
+          C:\Miniconda\condabin\conda.bat install -c conda-forge scikit-bio
           pip install -e .[dev]
       - name: Show pip list
         run: |
