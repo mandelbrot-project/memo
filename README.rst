@@ -30,7 +30,7 @@ Publication
 -----------
 
 If you use MEMO, please cite the following papers:
-   - MEMO preprint - MEMO: Mass Spectrometry-based Sample Vectorization to Explore Chemodiverse Datasets Arnaud Gaudry, Florian Huber, Louis-Felix Nothias, Sylvian Cretton, Marcel Kaiser, Jean-Luc Wolfender, Pierre-Marie Allard bioRxiv 2021.12.24.474089; doi: https://doi.org/10.1101/2021.12.24.474089
+   - Gaudry A, Huber F, Nothias L-F, Cretton S, Kaiser M, Wolfender J-L, et al. MEMO: Mass Spectrometry-Based Sample Vectorization to Explore Chemodiverse Datasets. Frontiers in Bioinformatics. 2022;2. https://doi.org/10.3389/fbinf.2022.842964 
    - Huber, Florian, Stefan Verhoeven, Christiaan Meijer, Hanno Spreeuw, Efraín Castilla, Cunliang Geng, Justin van der Hooft, et al. 2020. “Matchms - Processing and Similarity Evaluation of Mass Spectrometry Data.” Journal of Open Source Software 5 (52): 2411. https://doi.org/10.21105/joss.02411 
    - Huber, Florian, Lars Ridder, Stefan Verhoeven, Jurriaan H. Spaaks, Faruk Diblen, Simon Rogers, and Justin J. J. van der Hooft. 2021. “Spec2Vec: Improved Mass Spectral Similarity Scoring through Learning of Structural Relationships.” PLoS Computational Biology 17 (2): e1008724. https://doi.org/10.1371/journal.pcbi.1008724
 
